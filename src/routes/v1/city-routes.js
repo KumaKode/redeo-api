@@ -7,7 +7,7 @@ router.post("/", CityController.createCity);
 
 router.get("/", CityController.getCities);
 
-router.get("/country-state", CityController.getCitiesByCountryAndStateCode);
+router.post("/country-state", CityController.getCitiesByCountryAndStateCode);
 
 router.delete("/:id", CityController.destroyCity);
 

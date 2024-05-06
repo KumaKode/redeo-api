@@ -36,7 +36,7 @@ async function signup(data) {
 
     if (data.socialLogin === "Linkedin" || data.socialLogin === "Google") {
       user = await userRepository.create({
-        name: data.name,
+        fullName: data.fullName,
         email: data.email,
         password: bcrypt.hashSync(data.sub, +ServerConfig.SALT_ROUNDS),
         emailVerified: true,
