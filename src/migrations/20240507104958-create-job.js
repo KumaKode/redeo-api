@@ -1,55 +1,55 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Jobs', {
+    await queryInterface.createTable("Jobs", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       employerId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       jobTitle: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
-      workPlace: {
-        type: Sequelize.ENUM
-      },
-      jobType: {
-        type: Sequelize.ENUM
-      },
+      // workPlace: {
+      //   type: Sequelize.ENUM
+      // },
+      // jobType: {
+      //   type: Sequelize.ENUM
+      // },
       skills: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       jobDescription: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       jobLocation: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       experience: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       salary: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       isActive: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Jobs');
-  }
+    await queryInterface.dropTable("Jobs");
+  },
 };
