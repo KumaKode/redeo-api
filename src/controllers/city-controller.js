@@ -32,7 +32,8 @@ async function getCities(req, res) {
 async function getCitiesByCountryAndStateCode(req, res) {
   try {
     const city = await CityService.getCitiesByCountryAndStateCode(
-      req.body.name
+      req.body.countryName,
+      req.body.stateName
     );
     SuccessResponse.data = city;
     return res.status(StatusCodes.OK).json(SuccessResponse);

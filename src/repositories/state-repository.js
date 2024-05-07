@@ -24,6 +24,16 @@ class StateRepository extends CrudRepository {
     });
     return response;
   }
+
+  async getStateByNameAndCountryCode(name, countryCode) {
+    const response = await State.findOne({
+      where: {
+        name: name,
+        countryCode: countryCode,
+      },
+    });
+    return response;
+  }
 }
 
 module.exports = StateRepository;
