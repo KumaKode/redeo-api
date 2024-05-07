@@ -7,7 +7,7 @@ router.post("/", StateController.createState);
 
 //router.get("/", StateController.getStates);
 
-router.post("/country-code", StateController.getStatesByCountryCode);
+router.post("/country", StateController.getStatesByName);
 
 router.delete("/:id", StateController.destroyState);
 

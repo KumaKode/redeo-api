@@ -14,6 +14,15 @@ class CountryRepository extends CrudRepository {
     });
     return response;
   }
+
+  async getCountryByName(name) {
+    const response = await Country.findOne({
+      where: {
+        name: name,
+      },
+    });
+    return response;
+  }
 }
 
 module.exports = CountryRepository;

@@ -6,7 +6,8 @@ async function createState(req, res) {
   try {
     const state = await StateService.createState({
       name: req.body.name,
-      countryId: req.body.countryId,
+      stateCode: req.body.stateCode,
+      countryCode: req.body.countryCode,
     });
     SuccessResponse.data = state;
     return res.status(StatusCodes.CREATED).json(SuccessResponse);
@@ -29,11 +30,9 @@ async function getStates(req, res) {
   }
 }
 
-async function getStatesByCountryCode(req, res) {
+async function getStatesByName(req, res) {
   try {
-    const state = await StateService.getStatesByCountryCode(
-      req.body.countryCode
-    );
+    const state = await StateService.getStatesByCountryName(req.body.name);
     SuccessResponse.data = state;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
@@ -70,7 +69,7 @@ async function updateState(req, res) {
 module.exports = {
   createState,
   getStates,
-  getStatesByCountryCode,
+  getStatesByName,
   destroyState,
   updateState,
 };

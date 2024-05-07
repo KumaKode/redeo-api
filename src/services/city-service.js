@@ -3,6 +3,7 @@ const { CityRepository } = require("../repositories");
 const AppError = require("../utils/errors/app-error");
 
 const cityRepository = new CityRepository();
+const StateService = require("./state-service");
 
 async function createCity(data) {
   try {
@@ -31,9 +32,22 @@ async function getCities() {
   }
 }
 
-async function getCitiesByCountryAndStateCode(data) {
+async function getCitiesByCountryAndStateCode(name) {
   try {
-    const cities = await cityRepository.getCitiesByCountryAndStateCode(data);
+    const state = await StateService.getStateByName(name);
+
+    if (!state) {
+      throw new AppError(
+        "The requested state not found",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    const cities = await cityRepository.getCitiesByCountryAndStateCode({
+      countryCode: state.countryCode,
+      stateCode: state.stateCode,
+    });
     return cities;
   } catch (error) {
     if (error instanceof AppError) throw error;

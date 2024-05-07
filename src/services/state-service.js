@@ -3,6 +3,7 @@ const { StateRepository } = require("../repositories");
 const AppError = require("../utils/errors/app-error");
 
 const stateRepository = new StateRepository();
+const CountryService = require("./country-service");
 
 async function createState(data) {
   try {
@@ -33,6 +34,63 @@ async function getStates() {
 async function getStatesByCountryCode(countryCode) {
   try {
     const state = await stateRepository.getStatesByCountryCode(countryCode);
+    return state;
+  } catch (error) {
+    console.log(error);
+    throw new AppError(
+      "The requested states not found",
+      { explanation: error.message, query: error.sql || "" },
+      StatusCodes.NOT_FOUND
+    );
+  }
+}
+
+async function getStateByName(name) {
+  try {
+    const state = await stateRepository.getStateByName(name);
+
+    if (!state) {
+      throw new AppError(
+        "The requested state not found",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    return state;
+  } catch (error) {
+    console.log(error);
+    throw new AppError(
+      "The requested states not found",
+      { explanation: error.message, query: error.sql || "" },
+      StatusCodes.NOT_FOUND
+    );
+  }
+}
+
+async function getStatesByCountryName(name) {
+  try {
+    const country = await CountryService.getCountryByName(name);
+
+    if (!country) {
+      throw new AppError(
+        "The requested country not found",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    const state = await stateRepository.getStatesByCountryCode(
+      country.countryCode
+    );
+
+    if (!state) {
+      throw new AppError(
+        "The requested state not found",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
     return state;
   } catch (error) {
     console.log(error);
@@ -84,6 +142,8 @@ module.exports = {
   createState,
   getStates,
   getStatesByCountryCode,
+  getStatesByCountryName,
+  getStateByName,
   destroyState,
   updateState,
 };

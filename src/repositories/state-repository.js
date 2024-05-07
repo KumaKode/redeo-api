@@ -8,20 +8,21 @@ class StateRepository extends CrudRepository {
   }
 
   async getStatesByCountryCode(countryCode) {
-    try {
-      const response = await State.findAll({
-        where: {
-          countryCode: countryCode,
-        },
-      });
-      return response;
-    } catch (error) {
-      throw new AppError(
-        "The requested states not found",
-        { explanation: error.sqlMessage },
-        StatusCodes.NOT_FOUND
-      );
-    }
+    const response = await State.findAll({
+      where: {
+        countryCode: countryCode,
+      },
+    });
+    return response;
+  }
+
+  async getStateByName(name) {
+    const response = await State.findOne({
+      where: {
+        name: name,
+      },
+    });
+    return response;
   }
 }
 
