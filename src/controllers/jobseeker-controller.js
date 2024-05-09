@@ -13,7 +13,7 @@ const {
 async function createJobSeeker(req, res) {
   try {
     const jobseeker = await JobSeekerService.createJobSeeker({
-      userId: req.body.userId,
+      userId: req.body.user.id,
       occupation: req.body.occupation,
       gender: req.body.gender,
       dob: req.body.dob,
