@@ -35,7 +35,7 @@ async function getCities() {
 
 async function getCitiesByCountryAndStateCode(stateId) {
   try {
-    const state = await StateService.get(stateId);
+    const state = await StateService.getState(stateId);
 
     if (!state) {
       throw new AppError(
