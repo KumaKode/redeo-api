@@ -34,6 +34,7 @@ async function getCities() {
 }
 
 async function getCitiesByCountryAndStateCode(stateId) {
+  console.log(stateId);
   try {
     const state = await StateService.getState(stateId);
 
@@ -49,11 +50,12 @@ async function getCitiesByCountryAndStateCode(stateId) {
       countryCode: state.countryCode,
       stateCode: state.stateCode,
     });
+
     return cities;
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new AppError(
-      "Requested cities not found",
+      "Something went wrong",
       { explanation: error.message, query: error.sql || "" },
       StatusCodes.NOT_FOUND
     );

@@ -33,7 +33,7 @@ async function getStates() {
 
 async function getState(id) {
   try {
-    const state = await StateRepository.get(id);
+    const state = await stateRepository.get(id);
 
     if (!state) {
       throw new AppError(

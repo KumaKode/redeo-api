@@ -38,6 +38,7 @@ async function getCitiesByCountryAndStateCode(req, res) {
     SuccessResponse.data = city;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
+    console.log(error);
     ErrorResponse.message = error.message;
     ErrorResponse.error = error.explanation;
     return res.status(error.statusCode).json(ErrorResponse);
