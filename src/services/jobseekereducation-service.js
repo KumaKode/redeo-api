@@ -4,6 +4,7 @@ const AppError = require("../utils/errors/app-error");
 const { JobSeekerEducationRepository } = require("../repositories");
 
 const jobSeekerEducationRepository = new JobSeekerEducationRepository();
+const JobSeekerService = require("./jobseeker-service");
 
 async function addEducationToJobSeeker(id, data) {
   try {

@@ -4,6 +4,7 @@ const AppError = require("../utils/errors/app-error");
 const { JobSeekerExperienceRepository } = require("../repositories");
 
 const jobSeekerExperienceRepository = new JobSeekerExperienceRepository();
+const JobSeekerService = require("./jobseeker-service");
 
 async function addExperienceToJobSeeker(id, data) {
   try {
