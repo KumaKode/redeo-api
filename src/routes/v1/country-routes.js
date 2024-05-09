@@ -5,6 +5,6 @@ const { CountryController } = require("../../controllers");
 
 router.get("/", CountryController.getCountries);
 
-router.post("/country-code", CountryController.getCountryByCode);
+router.post("/", CountryController.getCountry);
 
 module.exports = router;

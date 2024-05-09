@@ -33,24 +33,9 @@ async function getCities() {
   }
 }
 
-async function getCitiesByCountryAndStateCode(countryName, stateName) {
+async function getCitiesByCountryAndStateCode(countryId, stateId) {
   try {
-    const country = await CountryService.getCountryByName(countryName);
-
-    if (!country) {
-      throw new AppError(
-        "The requested country not found",
-        { explanation: "" },
-        StatusCodes.NOT_FOUND
-      );
-    }
-
-    console.log(country);
-
-    const state = await StateService.getStateByNameAndCountryCode(
-      stateName,
-      country.countryCode
-    );
+    const state = await StateService.get(stateId);
 
     if (!state) {
       throw new AppError(

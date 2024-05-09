@@ -30,9 +30,9 @@ async function getStates(req, res) {
   }
 }
 
-async function getStatesByName(req, res) {
+async function getStatesByCountryId(req, res) {
   try {
-    const state = await StateService.getStatesByCountryName(req.body.name);
+    const state = await StateService.getStatesByCountryId(req.body.name);
     SuccessResponse.data = state;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
@@ -69,7 +69,7 @@ async function updateState(req, res) {
 module.exports = {
   createState,
   getStates,
-  getStatesByName,
+  getStatesByCountryId,
   destroyState,
   updateState,
 };

@@ -14,9 +14,9 @@ async function getCountries(req, res) {
   }
 }
 
-async function getCountryByCode(req, res) {
+async function getCountry(req, res) {
   try {
-    const country = await CountryService.getCountryByCode(req.body.countryCode);
+    const country = await CountryService.getCountry(req.body.countryId);
     SuccessResponse.data = country;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
@@ -28,5 +28,5 @@ async function getCountryByCode(req, res) {
 
 module.exports = {
   getCountries,
-  getCountryByCode,
+  getCountry,
 };

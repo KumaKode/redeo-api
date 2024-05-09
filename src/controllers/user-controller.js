@@ -30,7 +30,7 @@ async function socialSiginin(req, res) {
 async function signup(req, res) {
   try {
     const user = await UserService.signup({
-      fullName: req.body.name,
+      fullName: req.body.fullName,
       email: req.body.email,
       password: req.body.password,
     });
@@ -122,7 +122,7 @@ async function resendOTP(req, res) {
   try {
     const otp = await OTPService.resendOTP({
       userId: req.user.id,
-      name: req.body.name,
+      fullName: req.body.fullName,
       email: req.body.email,
     });
     SuccessResponse.data = otp;

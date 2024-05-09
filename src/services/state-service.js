@@ -31,58 +31,29 @@ async function getStates() {
   }
 }
 
-async function getStateByName(name) {
+async function getState(id) {
   try {
-    const state = await stateRepository.getStateByName(name);
+    const state = await StateRepository.get(id);
 
     if (!state) {
       throw new AppError(
-        "The requested state not found",
+        "No state found for the given Id",
         { explanation: "" },
-        StatusCodes.NOT_FOUND
+        StatusCodes.CONFLICT
       );
     }
 
     return state;
   } catch (error) {
-    console.log(error);
-    throw new AppError(
-      "The requested states not found",
-      { explanation: error.message, query: error.sql || "" },
-      StatusCodes.NOT_FOUND
-    );
-  }
-}
-
-async function getStateByNameAndCountryCode(name, countryCode) {
-  try {
-    const state = await stateRepository.getStateByNameAndCountryCode(
-      name,
-      countryCode
-    );
-
-    if (!state) {
-      throw new AppError(
-        "The requested state not found",
-        { explanation: "" },
-        StatusCodes.NOT_FOUND
-      );
+    if ((error.StatusCode = StatusCodes.NOT_FOUND)) {
+      throw new AppError("The requested state not found", error.StatusCode);
     }
-
-    return state;
-  } catch (error) {
-    console.log(error);
-    throw new AppError(
-      "The requested states not found",
-      { explanation: error.message, query: error.sql || "" },
-      StatusCodes.NOT_FOUND
-    );
   }
 }
 
-async function getStatesByCountryName(name) {
+async function getStatesByCountryId(id) {
   try {
-    const country = await CountryService.getCountryByName(name);
+    const country = await CountryService.get(id);
 
     if (!country) {
       throw new AppError(
@@ -153,9 +124,8 @@ async function updateState(id, data) {
 module.exports = {
   createState,
   getStates,
-  getStatesByCountryName,
-  getStateByNameAndCountryCode,
-  getStateByName,
+  getStatesByCountryId,
+  getState,
   destroyState,
   updateState,
 };

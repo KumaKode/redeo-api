@@ -17,28 +17,26 @@ async function getCountries() {
   }
 }
 
-async function getCountryByName(name) {
+async function getCountry(id) {
   try {
-    const country = await countryRepository.getCountryByName(name);
+    const country = await CountryRepository.get(id);
+
     if (!country) {
       throw new AppError(
-        "The requested country not found",
+        "No country found for the given Id",
         { explanation: "" },
-        StatusCodes.NOT_FOUND
+        StatusCodes.CONFLICT
       );
     }
     return country;
   } catch (error) {
-    if (error instanceof AppError) throw error;
-    throw new AppError(
-      "Something went wrong",
-      { explanation: error.message, query: error.sql || "" },
-      StatusCodes.NOT_FOUND
-    );
+    if ((error.StatusCode = StatusCodes.NOT_FOUND)) {
+      throw new AppError("The requested country not found", error.StatusCode);
+    }
   }
 }
 
 module.exports = {
   getCountries,
-  getCountryByName,
+  getCountry,
 };
