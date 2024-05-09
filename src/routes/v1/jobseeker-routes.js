@@ -68,9 +68,17 @@ router.delete("/video", passport.checkAuth, JobSeekerController.deleteVideo);
 
 router.post("/profile", JobSeekerController.getJobSeekerProfileByUserId);
 
-router.post("/education", JobSeekerController.addEducationToJobSeeker);
+router.post(
+  "/education",
+  passport.checkAuth,
+  JobSeekerController.addEducationToJobSeeker
+);
 
-router.post("/experience", JobSeekerController.addExperienceToJobSeeker);
+router.post(
+  "/experience",
+  passport.checkAuth,
+  JobSeekerController.addExperienceToJobSeeker
+);
 
 // router.patch("/:id", JobSeekerController.updateCity);
 
