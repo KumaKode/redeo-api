@@ -18,12 +18,12 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
-      firstName: {
+      occupation: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      lastName: {
-        type: Sequelize.STRING,
+      description: {
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       countryId: {

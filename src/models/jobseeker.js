@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         through: "JobSeekerSkill",
       });
 
+      this.belongsToMany(models.Job, {
+        through: "ApplyJob",
+      });
+
       this.hasMany(models.JobSeekerEducation, {
         foreignKey: "jobSeekerId",
         as: "education",
@@ -26,6 +30,14 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.JobSeekerResume, {
         foreignKey: "jobSeekerId",
         as: "resume",
+      });
+
+      this.hasMany(models.Answer, {
+        foreignKey: "jobSeekerId",
+      });
+
+      this.hasMany(models.Video, {
+        foreignKey: "jobSeekerId",
       });
 
       this.belongsTo(models.User, {
@@ -52,18 +64,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      firstName: {
+      occupation: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      lastName: {
-        type: DataTypes.STRING,
+      description: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
-      // about: {
-      //   type: DataTypes.TEXT,
-      //   allowNull: false,
-      // },
       countryId: {
         type: DataTypes.INTEGER,
         allowNull: false,

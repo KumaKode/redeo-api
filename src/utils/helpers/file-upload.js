@@ -8,13 +8,13 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     let uploadDir;
 
-    if (req.path === "/video-upload") {
-      if (file.mimetype.startsWith("video")) {
-        uploadDir = `uploads/users/${req.user.id}/video`;
+    if (req.path === "/profile-picture") {
+      if (file.mimetype.startsWith("image")) {
+        uploadDir = `uploads/users/${req.user.id}/profile-picture`;
       } else {
         return cb(
           new AppError(
-            "File type not supported. Videos are allowed.",
+            "File type not supported. Only images are allowed.",
             { explanation: "" },
             StatusCodes.BAD_REQUEST
           )
@@ -33,7 +33,21 @@ const storage = multer.diskStorage({
       } else {
         return cb(
           new AppError(
-            "File type not supported. Pdfs and docs are allowed.",
+            "File type not supported. Only Pdfs and docs are allowed.",
+            { explanation: "" },
+            StatusCodes.BAD_REQUEST
+          )
+        );
+      }
+    }
+
+    if (req.path === "/video-upload") {
+      if (file.mimetype.startsWith("video")) {
+        uploadDir = `uploads/users/${req.user.id}/video`;
+      } else {
+        return cb(
+          new AppError(
+            "File type not supported. Only Videos are allowed.",
             { explanation: "" },
             StatusCodes.BAD_REQUEST
           )
@@ -59,6 +73,61 @@ const storage = multer.diskStorage({
 // File filter
 const fileFilter = (req, file, cb) => {
   const size = +req.rawHeaders.slice(-1)[0];
+
+  if (req.path === "/profile-picture") {
+    if (file.mimetype.startsWith("image")) {
+      // Check video count
+      const uploadDir = `uploads/users/${req.user.id}/profile-picture`;
+      if (fs.existsSync(uploadDir)) {
+        fs.readdir(uploadDir, (error, files) => {
+          if (error) {
+            return cb(
+              new AppError(
+                "Error reading folder.",
+                { explanation: error.message },
+                StatusCodes.BAD_REQUEST
+              )
+            );
+          }
+
+          // Remove each file in the folder
+          files.forEach((file) => {
+            const filePath = path.join(uploadDir, file);
+            fs.unlink(filePath, (error) => {
+              if (error) {
+                return cb(
+                  new AppError(
+                    "Error Deleting file.",
+                    { explanation: error.message },
+                    StatusCodes.BAD_REQUEST
+                  )
+                );
+              }
+            });
+          });
+        });
+
+        if (size > 3 * 1024 * 1024) {
+          return cb(
+            new AppError(
+              "File size exceeds the limit of 3MB",
+              { explanation: "" },
+              StatusCodes.BAD_REQUEST
+            )
+          );
+        }
+      }
+      cb(null, true);
+    } else {
+      return cb(
+        new AppError(
+          "File type not supported. Only images are allowed.",
+          { explanation: "" },
+          StatusCodes.BAD_REQUEST
+        )
+      );
+    }
+  }
 
   if (req.path === "/resume-upload") {
     if (

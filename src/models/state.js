@@ -14,6 +14,14 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       });
 
+      this.hasMany(models.JobSeeker, {
+        foreignKey: "stateId",
+      });
+
+      this.hasMany(models.Employer, {
+        foreignKey: "stateId",
+      });
+
       this.hasMany(models.City, {
         foreignKey: "id",
       });

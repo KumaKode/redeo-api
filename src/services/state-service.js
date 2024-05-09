@@ -31,20 +31,6 @@ async function getStates() {
   }
 }
 
-async function getStatesByCountryCode(countryCode) {
-  try {
-    const state = await stateRepository.getStatesByCountryCode(countryCode);
-    return state;
-  } catch (error) {
-    console.log(error);
-    throw new AppError(
-      "The requested states not found",
-      { explanation: error.message, query: error.sql || "" },
-      StatusCodes.NOT_FOUND
-    );
-  }
-}
-
 async function getStateByName(name) {
   try {
     const state = await stateRepository.getStateByName(name);
@@ -167,7 +153,6 @@ async function updateState(id, data) {
 module.exports = {
   createState,
   getStates,
-  getStatesByCountryCode,
   getStatesByCountryName,
   getStateByNameAndCountryCode,
   getStateByName,

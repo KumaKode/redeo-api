@@ -7,5 +7,6 @@ module.exports = {
   JobSeekerEducationService: require("./jobseekereducation-service"),
   JobSeekerExperienceService: require("./jobseekerexperience-service"),
   JobSeekerResumeService: require("./jobseekerresume-service"),
+  VideoService: require("./video-service"),
   OTPService: require("./otp-service"),
 };

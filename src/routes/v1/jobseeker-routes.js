@@ -55,10 +55,16 @@ router.post(
       next();
     });
   },
-  (req, res) => {
-    res.send("ok");
-  }
+  JobSeekerController.addVideoToJobSeeker
 );
+
+router.get(
+  "/video",
+  passport.checkAuth,
+  JobSeekerController.getVideosByJobSeekerUserId
+);
+
+router.delete("/video", passport.checkAuth, JobSeekerController.deleteVideo);
 
 router.post("/profile", JobSeekerController.getJobSeekerProfileByUserId);
 

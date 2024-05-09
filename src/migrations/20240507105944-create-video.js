@@ -11,6 +11,10 @@ module.exports = {
       },
       jobSeekerId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "JobSeekers",
+          key: "id",
+        },
         allowNull: false,
       },
       name: {

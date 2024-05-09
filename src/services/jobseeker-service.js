@@ -4,9 +4,18 @@ const AppError = require("../utils/errors/app-error");
 const { JobSeekerRepository } = require("../repositories");
 
 const jobSeekerRepository = new JobSeekerRepository();
+const UserService = require("./user-service");
 
 async function createJobSeeker(data) {
   try {
+    const update = UserService.updateUser(data.userId, {
+      dob: data.dob,
+      phone: data.phone,
+      gender: data.gender,
+    });
+
+    console.log(update);
+
     const jobSeeker = await jobSeekerRepository.create(data);
     return jobSeeker;
   } catch (error) {

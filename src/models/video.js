@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsToMany(models.Job, {
+        through: "ApplyJob",
+      });
+
+      this.belongsTo(models.JobSeeker, {
+        foreignKey: "jobSeekerId",
+        onDelete: "CASCADE",
+      });
     }
   }
   Video.init(

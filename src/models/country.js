@@ -10,15 +10,19 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.City, {
-        foreignKey: "id",
+        foreignKey: "countryCode",
       });
 
       this.hasMany(models.JobSeeker, {
-        foreignKey: "id",
+        foreignKey: "countryId",
+      });
+
+      this.hasMany(models.Employer, {
+        foreignKey: "countryId",
       });
 
       this.hasMany(models.State, {
-        foreignKey: "id",
+        foreignKey: "countryCode",
       });
     }
   }

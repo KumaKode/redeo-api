@@ -7,7 +7,7 @@ class JobSeekerResumeRepository extends CrudRepository {
   }
 
   async getResumesByJobSeekerId(id) {
-    const resume = await this.model.findAll({
+    const resume = await JobSeekerResume.findAll({
       where: {
         jobSeekerId: id,
       },

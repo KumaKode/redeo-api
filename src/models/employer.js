@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Employer extends Model {
     /**
@@ -11,23 +9,74 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.Job, {
+        foreignKey: "employerId",
+      });
+
+      this.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
+
+      this.belongsTo(models.Country, {
+        foreignKey: "countryId",
+      });
+
+      this.belongsTo(models.State, {
+        foreignKey: "stateId",
+      });
+
+      this.belongsTo(models.City, {
+        foreignKey: "cityId",
+      });
     }
   }
-  Employer.init({
-    userId: DataTypes.INTEGER,
-    companyName: DataTypes.STRING,
-    companyDescription: DataTypes.TEXT,
-    companyLogo: DataTypes.STRING,
-    companyBanner: DataTypes.STRING,
-    companyWebsite: DataTypes.STRING,
-    countryId: DataTypes.INTEGER,
-    stateId: DataTypes.INTEGER,
-    cityId: DataTypes.INTEGER,
-    companyAddress: DataTypes.STRING,
-    employees: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Employer',
-  });
+  Employer.init(
+    {
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      companyName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      companyDescription: {
+        type: DataTypes.TEXT,
+      },
+      companyLogo: {
+        type: DataTypes.STRING,
+      },
+      companyBanner: {
+        type: DataTypes.STRING,
+      },
+      companyWebsite: {
+        type: DataTypes.STRING,
+      },
+      countryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      stateId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      cityId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      companyAddress: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      employees: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Employer",
+    }
+  );
   return Employer;
 };

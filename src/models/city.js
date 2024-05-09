@@ -20,7 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       this.hasMany(models.JobSeeker, {
-        foreignKey: "id",
+        foreignKey: "cityId",
+      });
+
+      this.hasMany(models.Employer, {
+        foreignKey: "cityId",
       });
     }
   }

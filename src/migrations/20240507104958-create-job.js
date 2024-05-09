@@ -11,33 +11,58 @@ module.exports = {
       },
       employerId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "Employers",
+          key: "id",
+        },
+        allowNull: false,
       },
       jobTitle: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
-      // workPlace: {
-      //   type: Sequelize.ENUM
-      // },
-      // jobType: {
-      //   type: Sequelize.ENUM
-      // },
+      categoryId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "JobCategories",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      workPlace: {
+        type: Sequelize.ENUM,
+        values: ["Remote", "On-site", "Hybrid"],
+        allowNull: false,
+      },
+      jobType: {
+        type: Sequelize.ENUM,
+        values: ["Full-time", "Part-time", "Internship"],
+        allowNull: false,
+      },
       skills: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       jobDescription: {
         type: Sequelize.TEXT,
+        allowNull: false,
       },
       jobLocation: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       experience: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       salary: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       isActive: {
         type: Sequelize.BOOLEAN,
+        defaultValue: true,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

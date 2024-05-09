@@ -9,20 +9,84 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsToMany(models.JobSeeker, {
+        through: "ApplyJob",
+      });
+
+      this.belongsToMany(models.JobSeekerResume, {
+        through: "ApplyJob",
+      });
+
+      this.belongsToMany(models.Video, {
+        through: "ApplyJob",
+      });
+
+      this.hasMany(models.Question, {
+        foreignKey: "jobId",
+      });
+
+      this.hasMany(models.Answer, {
+        foreignKey: "jobId",
+      });
+
+      this.belongsTo(models.Employer, {
+        foreignKey: "employerId",
+        onDelete: "CASCADE",
+      });
+
+      this.belongsTo(models.JobCategory, {
+        foreignKey: "categoryId",
+      });
     }
   }
   Job.init(
     {
-      employerId: DataTypes.INTEGER,
-      jobTitle: DataTypes.STRING,
-      //workPlace: DataTypes.ENUM,
-      //jobType: DataTypes.ENUM,
-      skills: DataTypes.STRING,
-      jobDescription: DataTypes.TEXT,
-      jobLocation: DataTypes.STRING,
-      experience: DataTypes.INTEGER,
-      salary: DataTypes.STRING,
-      isActive: DataTypes.BOOLEAN,
+      employerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      jobTitle: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      categoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      workPlace: {
+        type: DataTypes.ENUM,
+        values: ["Remote", "On-site", "Hybrid"],
+        allowNull: false,
+      },
+      jobType: {
+        type: DataTypes.ENUM,
+        values: ["Full-time", "Part-time", "Internship"],
+        allowNull: false,
+      },
+      skills: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      jobDescription: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      jobLocation: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      experience: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      salary: {
+        type: DataTypes.STRING,
+      },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
     },
     {
       sequelize,

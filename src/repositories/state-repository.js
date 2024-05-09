@@ -7,15 +7,6 @@ class StateRepository extends CrudRepository {
     super(State);
   }
 
-  async getStatesByCountryCode(countryCode) {
-    const response = await State.findAll({
-      where: {
-        countryCode: countryCode,
-      },
-    });
-    return response;
-  }
-
   async getStateByName(name) {
     const response = await State.findOne({
       where: {

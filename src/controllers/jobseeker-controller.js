@@ -1,20 +1,24 @@
 const { StatusCodes } = require("http-status-codes");
 const { SuccessResponse, ErrorResponse } = require("../utils/common");
+const moment = require("moment");
 
 const {
   JobSeekerService,
   JobSeekerEducationService,
   JobSeekerExperienceService,
   JobSeekerResumeService,
+  VideoService,
 } = require("../services");
 
 async function createJobSeeker(req, res) {
   try {
     const jobseeker = await JobSeekerService.createJobSeeker({
       userId: req.body.userId,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      about: req.body.about,
+      occupation: req.body.occupation,
+      gender: req.body.gender,
+      dob: req.body.dob,
+      age: moment().diff(req.body.dob, "years"),
+      description: req.body.description,
       countryId: req.body.countryId,
       stateId: req.body.stateId,
       cityId: req.body.cityId,
@@ -126,6 +130,47 @@ async function deleteResume(req, res) {
   }
 }
 
+async function addVideoToJobSeeker(req, res) {
+  try {
+    const jobSeekerVideo = VideoService.addVideoToJobSeeker(req.user.id, {
+      name: req.file.filename,
+      path: req.file.path,
+    });
+    SuccessResponse.data = jobSeekerVideo;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+async function getVideosByJobSeekerUserId(req, res) {
+  try {
+    const jobSeekerVideos = await VideoService.getVideosByJobSeekerUserId(
+      req.user.id
+    );
+    SuccessResponse.data = jobSeekerVideos;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+async function deleteVideo(req, res) {
+  try {
+    const response = await VideoService.deleteResume(req.body.id);
+    SuccessResponse.data = response;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
 // async function updateCity(req, res) {
 //   try {
 //     const city = await JobSeekerService.updateCity(req.params.id, req.body);
@@ -146,4 +191,7 @@ module.exports = {
   addResumeToJobSeeker,
   getResumesByJobSeekerUserId,
   deleteResume,
+  addVideoToJobSeeker,
+  getVideosByJobSeekerUserId,
+  deleteVideo,
 };

@@ -6,6 +6,7 @@ const router = express.Router();
 const { UserController } = require("../../controllers");
 const { UserMiddlewares } = require("../../middlewares");
 const { ErrorResponse, SuccessResponse } = require("../../utils/common");
+const upload = require("../../utils/helpers/file-upload");
 require("../../utils/common/passport");
 
 router.post("/signin/google", UserController.socialSiginin);
@@ -14,6 +15,28 @@ router.post("/signin/linkedin", UserController.socialSiginin);
 router.post("/signin", UserController.signin);
 
 router.post("/signup", UserMiddlewares.validateSignup, UserController.signup);
+
+router.post(
+  "/profile-picture",
+  passport.checkAuth,
+  function (req, res, next) {
+    upload.single("image")(req, res, function (error) {
+      if (error instanceof AppError) {
+        ErrorResponse.message = error.message;
+        ErrorResponse.error = error.explanation;
+        return res.status(error.statusCode).json(ErrorResponse);
+      } else if (error) {
+        ErrorResponse.message = error.message;
+        return res.status(500).json(ErrorResponse);
+      }
+      // Everything went fine.
+      next();
+    });
+  },
+  (req, res) => {
+    res.send("ok");
+  }
+);
 
 //router.get("/:id", UserController.getUser);
 

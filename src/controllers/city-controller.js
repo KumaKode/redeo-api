@@ -6,7 +6,8 @@ async function createCity(req, res) {
   try {
     const city = await CityService.createCity({
       name: req.body.name,
-      countryId: req.body.countryId,
+      stateCode: req.body.stateCode,
+      countryCode: req.body.countryCode,
     });
     SuccessResponse.data = city;
     return res.status(StatusCodes.CREATED).json(SuccessResponse);

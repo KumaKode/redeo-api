@@ -56,7 +56,7 @@ async function signup(data) {
       otp: await otpGen(),
     });
 
-    const template = createTemplate({ name: user.name, otp: otp.otp });
+    const template = createTemplate({ name: user.fullName, otp: otp.otp });
 
     await otpService.sendOTP({
       email: user.email,
@@ -285,6 +285,7 @@ async function isEmployer(id) {
 }
 
 async function verifyEmail(data) {
+  console.log(data);
   try {
     const user = await userRepository.get(data.id);
     if (!user) {

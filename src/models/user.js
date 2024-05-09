@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.JobSeeker, {
         foreignKey: "userId",
       });
+
+      this.hasMany(models.Employer, {
+        foreignKey: "userId",
+      });
     }
   }
   User.init(
@@ -47,6 +51,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       age: {
         type: DataTypes.INTEGER,
+      },
+      phone: {
+        type: DataTypes.STRING,
       },
       emailVerified: {
         type: DataTypes.BOOLEAN,

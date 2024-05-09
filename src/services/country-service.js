@@ -17,27 +17,6 @@ async function getCountries() {
   }
 }
 
-async function getCountryByCode(code) {
-  try {
-    const country = await countryRepository.getCountryByCode(code);
-    if (!country) {
-      throw new AppError(
-        "The requested country not found",
-        { explanation: "" },
-        StatusCodes.NOT_FOUND
-      );
-    }
-    return country;
-  } catch (error) {
-    if (error instanceof AppError) throw error;
-    throw new AppError(
-      "Something went wrong",
-      { explanation: error.message, query: error.sql || "" },
-      StatusCodes.NOT_FOUND
-    );
-  }
-}
-
 async function getCountryByName(name) {
   try {
     const country = await countryRepository.getCountryByName(name);
@@ -61,6 +40,5 @@ async function getCountryByName(name) {
 
 module.exports = {
   getCountries,
-  getCountryByCode,
   getCountryByName,
 };

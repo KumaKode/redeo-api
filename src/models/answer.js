@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Answer extends Model {
     /**
@@ -11,16 +9,44 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Job, {
+        foreignKey: "jobId",
+        onDelete: "CASCADE",
+      });
+
+      this.belongsTo(models.JobSeeker, {
+        foreignKey: "jobSeekerId",
+        onDelete: "CASCADE",
+      });
+
+      this.belongsTo(models.Question, {
+        foreignKey: "questionId",
+        onDelete: "CASCADE",
+      });
     }
   }
-  Answer.init({
-    jobId: DataTypes.INTEGER,
-    jobSeekerId: DataTypes.INTEGER,
-    questionId: DataTypes.INTEGER,
-    answer: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Answer',
-  });
+  Answer.init(
+    {
+      jobId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      jobSeekerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      questionId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      answer: {
+        type: DataTypes.STRING,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Answer",
+    }
+  );
   return Answer;
 };
