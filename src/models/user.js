@@ -52,9 +52,6 @@ module.exports = (sequelize, DataTypes) => {
       age: {
         type: DataTypes.INTEGER,
       },
-      phone: {
-        type: DataTypes.STRING,
-      },
       emailVerified: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

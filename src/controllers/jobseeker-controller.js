@@ -15,6 +15,7 @@ async function createJobSeeker(req, res) {
     const jobseeker = await JobSeekerService.createJobSeeker({
       userId: req.user.id,
       occupation: req.body.occupation,
+      phone: req.body.phone,
       gender: req.body.gender,
       dob: req.body.dob,
       age: moment().diff(req.body.dob, "years"),

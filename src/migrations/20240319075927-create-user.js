@@ -31,9 +31,6 @@ module.exports = {
       age: {
         type: Sequelize.INTEGER,
       },
-      phone: {
-        type: Sequelize.STRING,
-      },
       emailVerified: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

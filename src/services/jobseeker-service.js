@@ -10,8 +10,8 @@ async function createJobSeeker(data) {
   try {
     const update = UserService.updateUser(data.userId, {
       dob: data.dob,
-      phone: data.phone,
       gender: data.gender,
+      age: data.age,
     });
 
     console.log(update);
