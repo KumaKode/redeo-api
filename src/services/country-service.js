@@ -19,7 +19,7 @@ async function getCountries() {
 
 async function getCountry(id) {
   try {
-    const country = await CountryRepository.get(id);
+    const country = await countryRepository.get(id);
 
     if (!country) {
       throw new AppError(
