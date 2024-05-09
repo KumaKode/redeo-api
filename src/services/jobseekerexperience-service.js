@@ -8,7 +8,7 @@ const JobSeekerService = require("./jobseeker-service");
 
 async function addExperienceToJobSeeker(id, data) {
   try {
-    const jobSeeker = await JobSeekerService.getJobSeekerByUserId();
+    const jobSeeker = await JobSeekerService.getJobSeekerByUserId(id);
 
     if (!jobSeeker) {
       throw new AppError(
