@@ -33,7 +33,7 @@ async function getCities() {
   }
 }
 
-async function getCitiesByCountryAndStateCode(countryId, stateId) {
+async function getCitiesByCountryAndStateCode(stateId) {
   try {
     const state = await StateService.get(stateId);
 
