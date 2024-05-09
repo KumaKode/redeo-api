@@ -53,7 +53,7 @@ async function getState(id) {
 
 async function getStatesByCountryId(id) {
   try {
-    const country = await CountryService.get(id);
+    const country = await CountryService.getCountry(id);
 
     if (!country) {
       throw new AppError(
