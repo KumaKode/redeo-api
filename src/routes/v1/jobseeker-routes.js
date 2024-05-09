@@ -8,7 +8,7 @@ const upload = require("../../utils/helpers/file-upload");
 const { ErrorResponse } = require("../../utils/common");
 const AppError = require("../../utils/errors/app-error");
 
-router.post("/", JobSeekerController.createJobSeeker);
+router.post("/", passport.checkAuth, JobSeekerController.createJobSeeker);
 
 router.post(
   "/resume-upload",
