@@ -32,7 +32,7 @@ async function getStates(req, res) {
 
 async function getStatesByCountryId(req, res) {
   try {
-    const state = await StateService.getStatesByCountryId(req.body.name);
+    const state = await StateService.getStatesByCountryId(req.body.countryId);
     SuccessResponse.data = state;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
