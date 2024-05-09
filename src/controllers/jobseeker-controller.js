@@ -51,8 +51,7 @@ async function getJobSeekerProfileByUserId(req, res) {
 async function addEducationToJobSeeker(req, res) {
   try {
     const jobSeekerEducation =
-      await JobSeekerEducationService.addEducationToJobSeeker({
-        jobSeekerId: req.body.jobSeekerId,
+      await JobSeekerEducationService.addEducationToJobSeeker(req.user.id, {
         institute: req.body.institute,
         start: req.body.start,
         end: req.body.end,
@@ -71,8 +70,7 @@ async function addEducationToJobSeeker(req, res) {
 async function addExperienceToJobSeeker(req, res) {
   try {
     const jobSeekerExperience =
-      await JobSeekerExperienceService.addExperienceToJobSeeker({
-        jobSeekerId: req.body.jobSeekerId,
+      await JobSeekerExperienceService.addExperienceToJobSeeker(req.user.id, {
         company: req.body.company,
         start: req.body.start,
         end: req.body.end,

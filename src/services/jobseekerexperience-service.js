@@ -5,11 +5,23 @@ const { JobSeekerExperienceRepository } = require("../repositories");
 
 const jobSeekerExperienceRepository = new JobSeekerExperienceRepository();
 
-async function addExperienceToJobSeeker(data) {
+async function addExperienceToJobSeeker(id, data) {
   try {
-    const jobSeekerExperience = await jobSeekerExperienceRepository.create(
-      data
-    );
+    const jobSeeker = await JobSeekerService.getJobSeekerByUserId();
+
+    if (!jobSeeker) {
+      throw new AppError(
+        "No Job Seeker found for the given user Id",
+        { explanation: "" },
+        StatusCodes.CONFLICT
+      );
+    }
+
+    const jobSeekerExperience = await jobSeekerExperienceRepository.create({
+      jobSeekerId: jobSeeker.id,
+      ...data,
+    });
+
     return jobSeekerExperience;
   } catch (error) {
     throw new AppError(

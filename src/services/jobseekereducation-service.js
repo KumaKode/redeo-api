@@ -5,9 +5,21 @@ const { JobSeekerEducationRepository } = require("../repositories");
 
 const jobSeekerEducationRepository = new JobSeekerEducationRepository();
 
-async function addEducationToJobSeeker(data) {
+async function addEducationToJobSeeker(id, data) {
   try {
-    const jobSeekerEducation = await jobSeekerEducationRepository.create(data);
+    const jobSeeker = await JobSeekerService.getJobSeekerByUserId(id);
+
+    if (!jobSeeker) {
+      throw new AppError(
+        "No Job Seeker found for the given user Id",
+        { explanation: "" },
+        StatusCodes.CONFLICT
+      );
+    }
+    const jobSeekerEducation = await jobSeekerEducationRepository.create({
+      jobSeekerId: jobSeeker.id,
+      ...data,
+    });
     return jobSeekerEducation;
   } catch (error) {
     throw new AppError(
