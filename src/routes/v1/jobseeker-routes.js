@@ -12,7 +12,7 @@ router.post("/", passport.checkAuth, JobSeekerController.createJobSeeker);
 
 router.post("/profile", JobSeekerController.getJobSeekerProfileByUserId);
 
-router.get("/", passport.checkAuth, JobSeekerController.getAllJobSeekers);
+router.get("/", JobSeekerController.getAllJobSeekers);
 
 router.post(
   "/resume-upload",

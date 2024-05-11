@@ -17,6 +17,8 @@ router.post("/signin", UserController.signin);
 
 router.post("/signup", UserMiddlewares.validateSignup, UserController.signup);
 
+router.post("/addType", passport.checkAuth, UserController.addTypeToUser);
+
 router.post(
   "/profile-picture",
   passport.checkAuth,

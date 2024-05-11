@@ -49,9 +49,6 @@ async function signup(data) {
       user = await userRepository.create(data);
     }
 
-    const type = await typeRepository.getTypeByName("jobSeeker");
-    user.addType(type);
-
     const otp = await otpService.createOTP({
       userId: user.id,
       otp: await otpGen(),
@@ -77,7 +74,7 @@ async function signup(data) {
   }
 }
 
-async function addTypeToUser(id, type) {
+async function addTypeToUser(id, userType) {
   try {
     const user = await userRepository.get(id);
     if (!user) {
@@ -88,7 +85,7 @@ async function addTypeToUser(id, type) {
       );
     }
 
-    const type = await typeRepository.getTypeByName("jobSeeker");
+    const type = await typeRepository.getTypeByName(userType);
     if (!type) {
       throw new AppError(
         "The requested user type not found",
@@ -371,6 +368,7 @@ module.exports = {
   updateUser,
   // isAuthenticated,
   isAdmin,
+  addTypeToUser,
   isEmployer,
   isJobSeeker,
   verifyEmail,
