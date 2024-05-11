@@ -37,7 +37,7 @@ async function createJobSeeker(req, res) {
 async function getJobSeekerProfileByUserId(req, res) {
   try {
     const jobSeekerProfile = await JobSeekerService.getJobSeekerProfileByUserId(
-      req.body.userId
+      req.user.id
     );
     SuccessResponse.data = jobSeekerProfile;
     return res.status(StatusCodes.OK).json(SuccessResponse);

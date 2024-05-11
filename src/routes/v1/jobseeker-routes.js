@@ -10,7 +10,11 @@ const AppError = require("../../utils/errors/app-error");
 
 router.post("/", passport.checkAuth, JobSeekerController.createJobSeeker);
 
-router.post("/profile", JobSeekerController.getJobSeekerProfileByUserId);
+router.post(
+  "/profile",
+  passport.checkAuth,
+  JobSeekerController.getJobSeekerProfileByUserId
+);
 
 router.get("/", JobSeekerController.getAllJobSeekers);
 
