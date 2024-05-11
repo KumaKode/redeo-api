@@ -30,7 +30,7 @@ async function socialSiginin(req, res) {
 async function signup(req, res) {
   try {
     const user = await UserService.signup({
-      fullName: req.body.fullName,
+      fullName: req.body.name,
       email: req.body.email,
       password: req.body.password,
     });
@@ -92,7 +92,14 @@ async function getLinkedinProfile(code) {
 
 async function updateUser(req, res) {
   try {
-    const user = await UserService.updateUser(req.body.id, req.body.data);
+    let user;
+    if (req.file) {
+      user = await UserService.updateUser(req.user.id, {
+        profilePicture: req.file.path,
+      });
+    } else {
+      user = await UserService.updateUser(req.body.id, req.body.data);
+    }
     SuccessResponse.data = user;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {

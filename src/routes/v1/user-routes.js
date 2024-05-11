@@ -7,6 +7,7 @@ const { UserController } = require("../../controllers");
 const { UserMiddlewares } = require("../../middlewares");
 const { ErrorResponse, SuccessResponse } = require("../../utils/common");
 const upload = require("../../utils/helpers/file-upload");
+const AppError = require("../../utils/errors/app-error");
 require("../../utils/common/passport");
 
 router.post("/signin/google", UserController.socialSiginin);
@@ -33,9 +34,7 @@ router.post(
       next();
     });
   },
-  (req, res) => {
-    res.send("ok");
-  }
+  UserController.updateUser
 );
 
 //router.get("/:id", UserController.getUser);

@@ -87,7 +87,7 @@ async function resendOTP(data) {
       otp = await createOTP({ userId: data.userId, otp: await otpGen() });
     }
     await otp.update({ otp: await otpGen() });
-    const template = createTemplate({ name: data.name, otp: otp.otp });
+    const template = createTemplate({ fullName: data.fullName, otp: otp.otp });
     const newOTP = await sendOTP({
       email: data.email,
       template: template,

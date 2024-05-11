@@ -10,6 +10,10 @@ const AppError = require("../../utils/errors/app-error");
 
 router.post("/", passport.checkAuth, JobSeekerController.createJobSeeker);
 
+router.post("/profile", JobSeekerController.getJobSeekerProfileByUserId);
+
+router.get("/", passport.checkAuth, JobSeekerController.getAllJobSeekers);
+
 router.post(
   "/resume-upload",
   passport.checkAuth,
@@ -30,7 +34,7 @@ router.post(
   JobSeekerController.addResumeToJobSeeker
 );
 
-router.get(
+router.post(
   "/resume",
   passport.checkAuth,
   JobSeekerController.getResumesByJobSeekerUserId
@@ -58,15 +62,13 @@ router.post(
   JobSeekerController.addVideoToJobSeeker
 );
 
-router.get(
+router.post(
   "/video",
   passport.checkAuth,
   JobSeekerController.getVideosByJobSeekerUserId
 );
 
 router.delete("/video", passport.checkAuth, JobSeekerController.deleteVideo);
-
-router.post("/profile", JobSeekerController.getJobSeekerProfileByUserId);
 
 router.post(
   "/education",
@@ -75,11 +77,57 @@ router.post(
 );
 
 router.post(
+  "/educations",
+  passport.checkAuth,
+  JobSeekerController.getEducationsByJobSeekerUserId
+);
+
+router.post(
+  "/educationId",
+  passport.checkAuth,
+  JobSeekerController.getEducationByJobSeekerId
+);
+
+router.delete(
+  "/education",
+  passport.checkAuth,
+  JobSeekerController.deleteEducation
+);
+
+router.patch(
+  "/education",
+  passport.checkAuth,
+  JobSeekerController.updateEducation
+);
+
+router.post(
   "/experience",
   passport.checkAuth,
   JobSeekerController.addExperienceToJobSeeker
 );
 
-// router.patch("/:id", JobSeekerController.updateCity);
+router.post(
+  "/experiencess",
+  passport.checkAuth,
+  JobSeekerController.getExperiencesByJobSeekerUserId
+);
+
+router.post(
+  "/experienceId",
+  passport.checkAuth,
+  JobSeekerController.getExperienceByJobSeekerId
+);
+
+router.delete(
+  "/experience",
+  passport.checkAuth,
+  JobSeekerController.deleteExperience
+);
+
+router.patch(
+  "/experience",
+  passport.checkAuth,
+  JobSeekerController.updateExperience
+);
 
 module.exports = router;

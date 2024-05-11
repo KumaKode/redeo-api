@@ -48,6 +48,18 @@ async function getJobSeekerProfileByUserId(req, res) {
   }
 }
 
+async function getAllJobSeekers() {
+  try {
+    const jobSeekers = await JobSeekerService.getAllJobSeekers();
+    SuccessResponse.data = jobSeekers;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
 async function addEducationToJobSeeker(req, res) {
   try {
     const jobSeekerEducation =
@@ -67,6 +79,63 @@ async function addEducationToJobSeeker(req, res) {
   }
 }
 
+async function getEducationsByJobSeekerUserId(req, res) {
+  try {
+    const jobSeekerEducations =
+      await JobSeekerEducationService.getEducationsByJobSeekerUserId(
+        req.user.id
+      );
+    SuccessResponse.data = jobSeekerEducations;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+async function getEducationByJobSeekerId(req, res) {
+  try {
+    const jobSeekerEducation =
+      await JobSeekerEducationService.getEducationByJobSeekerId(req.body.id);
+    SuccessResponse.data = jobSeekerEducation;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+async function deleteEducation(req, res) {
+  try {
+    const response = await JobSeekerEducationService.deleteEducation(
+      req.body.id
+    );
+    SuccessResponse.data = response;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+async function updateEducation(req, res) {
+  try {
+    const education = await JobSeekerEducationService.updateEducation(
+      req.body.id,
+      req.body.data
+    );
+    SuccessResponse.data = education;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
 async function addExperienceToJobSeeker(req, res) {
   try {
     const jobSeekerExperience =
@@ -79,6 +148,63 @@ async function addExperienceToJobSeeker(req, res) {
       });
     SuccessResponse.data = jobSeekerExperience;
     return res.status(StatusCodes.CREATED).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+async function getExperiencesByJobSeekerUserId(req, res) {
+  try {
+    const jobSeekerExperiences =
+      await JobSeekerExperienceService.getExperiencesByJobSeekerUserId(
+        req.user.id
+      );
+    SuccessResponse.data = jobSeekerExperiences;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+async function getExperienceByJobSeekerId(req, res) {
+  try {
+    const jobSeekerExperience =
+      await JobSeekerExperienceService.getExperienceByJobSeekerId(req.body.id);
+    SuccessResponse.data = jobSeekerExperience;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+async function deleteExperience(req, res) {
+  try {
+    const response = await JobSeekerExperienceService.deleteExperience(
+      req.body.id
+    );
+    SuccessResponse.data = response;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+async function updateExperience(req, res) {
+  try {
+    const experience = await JobSeekerExperienceService.updateExperience(
+      req.body.id,
+      req.body.data
+    );
+    SuccessResponse.data = experience;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.message = error.message;
     ErrorResponse.error = error.explanation;
@@ -185,8 +311,17 @@ async function deleteVideo(req, res) {
 module.exports = {
   createJobSeeker,
   getJobSeekerProfileByUserId,
+  getAllJobSeekers,
   addEducationToJobSeeker,
+  getEducationsByJobSeekerUserId,
+  getEducationByJobSeekerId,
+  deleteEducation,
+  updateEducation,
   addExperienceToJobSeeker,
+  getExperiencesByJobSeekerUserId,
+  getExperienceByJobSeekerId,
+  deleteExperience,
+  updateExperience,
   addResumeToJobSeeker,
   getResumesByJobSeekerUserId,
   deleteResume,

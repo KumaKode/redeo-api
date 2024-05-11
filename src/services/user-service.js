@@ -25,6 +25,7 @@ async function signup(data) {
           StatusCodes.CONFLICT
         );
       }
+      console.log(user);
       await otpService.resendOTP({
         userId: user.id,
         fullName: user.fullName,
@@ -56,7 +57,7 @@ async function signup(data) {
       otp: await otpGen(),
     });
 
-    const template = createTemplate({ name: user.fullName, otp: otp.otp });
+    const template = createTemplate({ fullName: user.fullName, otp: otp.otp });
 
     await otpService.sendOTP({
       email: user.email,
@@ -174,9 +175,7 @@ async function updateUser(id, data) {
     const user = await userRepository.update(id, data);
     return user;
   } catch (error) {
-    if ((error.StatusCode = StatusCodes.NOT_FOUND)) {
-      throw new AppError("The requested user not found", error.StatusCode);
-    }
+    if (error instanceof AppError) throw error;
     throw new AppError(
       "Something went wrong",
       { explanation: error.message, query: error.sql || "" },
@@ -284,6 +283,42 @@ async function isEmployer(id) {
   }
 }
 
+async function isJobSeeker(id) {
+  try {
+    const user = await userRepository.get(id);
+
+    if (!user) {
+      throw new AppError(
+        "No user found for the given id",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    const jobSeeker = await typeRepository.getTypeByName("jobSeeker");
+
+    if (!jobSeeker) {
+      throw new AppError(
+        "No job seeker found for the given roles",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    const response = await user.hasRole(jobSeeker);
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof AppError) throw error;
+    throw new AppError(
+      "Something went wrong",
+      { explanation: error.message, query: error.sql || "" },
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 async function verifyEmail(data) {
   console.log(data);
   try {
@@ -337,5 +372,6 @@ module.exports = {
   // isAuthenticated,
   isAdmin,
   isEmployer,
+  isJobSeeker,
   verifyEmail,
 };

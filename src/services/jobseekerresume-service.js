@@ -44,11 +44,18 @@ async function getResumesByJobSeekerUserId(id) {
       );
     }
 
-    const jobResumes = await jobSeekerResumeRepository.getResumesByJobSeekerId(
-      jobSeeker.id
-    );
+    const jobSeekerResumes =
+      await jobSeekerResumeRepository.getResumesByJobSeekerId(jobSeeker.id);
 
-    return jobResumes;
+    if (!jobSeekerResumes) {
+      throw new AppError(
+        "The requested resumes not found",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    return jobSeekerResumes;
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new AppError(

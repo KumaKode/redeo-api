@@ -27,6 +27,29 @@ async function createJobSeeker(data) {
   }
 }
 
+async function getAllJobSeekers() {
+  try {
+    const jobSeekers = await jobSeekerRepository.findAll();
+
+    if (!jobSeekers) {
+      throw new AppError(
+        "No Job Seekers found",
+        { explanation: "" },
+        StatusCodes.CONFLICT
+      );
+    }
+
+    return jobSeekers;
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    throw new AppError(
+      "Something went wrong",
+      { explanation: error.message, sql: error.sql },
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 async function getJobSeekerProfileByUserId(id) {
   try {
     const jobSeeker = await jobSeekerRepository.getJobSeekerProfileByUserId(id);
@@ -41,7 +64,6 @@ async function getJobSeekerProfileByUserId(id) {
 
     return jobSeeker;
   } catch (error) {
-    console.log(error);
     if (error instanceof AppError) throw error;
     throw new AppError(
       "Something went wrong",
@@ -77,5 +99,6 @@ async function getJobSeekerByUserId(id) {
 module.exports = {
   createJobSeeker,
   getJobSeekerProfileByUserId,
+  getAllJobSeekers,
   getJobSeekerByUserId,
 };

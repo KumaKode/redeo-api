@@ -15,8 +15,6 @@ class JobSeekerResumeRepository extends CrudRepository {
 
     return resume;
   }
-
-  async deleteResume() {}
 }
 
 module.exports = JobSeekerResumeRepository;
