@@ -92,8 +92,7 @@ async function getAllJobSeekers(req, res) {
 async function addEducationToJobSeeker(req, res) {
   try {
     const jobSeekerEducation =
-      await JobSeekerEducationService.addEducationToJobSeeker({
-        jobSeekerId: req.user.jobSeekerId,
+      await JobSeekerEducationService.addEducationToJobSeeker(req.user.id, {
         institute: req.body.institute,
         start: req.body.start,
         end: req.body.end,
