@@ -16,6 +16,12 @@ router.get(
   JobSeekerController.getJobSeekerProfileByUserId
 );
 
+router.patch(
+  "/profile",
+  passport.checkAuth,
+  JobSeekerController.updateJobSeekerProfile
+);
+
 router.get("/", JobSeekerController.getAllJobSeekers);
 
 router.post(

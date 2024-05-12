@@ -8,7 +8,7 @@ const UserService = require("./user-service");
 
 async function createJobSeeker(data) {
   try {
-    const update = UserService.updateUser(data.userId, {
+    const update = await UserService.updateUser(data.userId, {
       dob: data.dob,
       gender: data.gender,
       age: data.age,
@@ -45,6 +45,29 @@ async function getAllJobSeekers() {
     throw new AppError(
       "Something went wrong",
       { explanation: error.message, sql: error.sql },
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
+async function updateJobSeekerProfile(id, data) {
+  try {
+    const update = await UserService.updateUser(data.userId, {
+      dob: data.dob,
+      gender: data.gender,
+      age: data.age,
+    });
+
+    console.log(update);
+
+    const profile = await jobSeekerRepository.update(id, data);
+
+    return profile;
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    throw new AppError(
+      "Something went wrong",
+      { explanation: error.message, query: error.sql || "" },
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
@@ -99,6 +122,7 @@ async function getJobSeekerByUserId(id) {
 module.exports = {
   createJobSeeker,
   getJobSeekerProfileByUserId,
+  updateJobSeekerProfile,
   getAllJobSeekers,
   getJobSeekerByUserId,
 };

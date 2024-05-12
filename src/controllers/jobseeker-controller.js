@@ -49,7 +49,35 @@ async function getJobSeekerProfileByUserId(req, res) {
   }
 }
 
-async function getAllJobSeekers() {
+async function updateJobSeekerProfile(req, res) {
+  try {
+    const jobseeker = await JobSeekerService.updateJobSeekerProfile(
+      req.body.id,
+      {
+        userId: req.user.id,
+        occupation: req.body.occupation,
+        phone: req.body.phone,
+        address: req.body.address,
+        gender: req.body.gender,
+        dob: req.body.dob,
+        age: moment().diff(req.body.dob, "years"),
+        description: req.body.description,
+        countryId: req.body.countryId,
+        stateId: req.body.stateId,
+        cityId: req.body.cityId,
+        totalExp: req.body.totalExp,
+      }
+    );
+    SuccessResponse.data = jobseeker;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+async function getAllJobSeekers(req, res) {
   try {
     const jobSeekers = await JobSeekerService.getAllJobSeekers();
     SuccessResponse.data = jobSeekers;
@@ -64,7 +92,8 @@ async function getAllJobSeekers() {
 async function addEducationToJobSeeker(req, res) {
   try {
     const jobSeekerEducation =
-      await JobSeekerEducationService.addEducationToJobSeeker(req.user.id, {
+      await JobSeekerEducationService.addEducationToJobSeeker({
+        jobSeekerId: req.user.jobSeekerId,
         institute: req.body.institute,
         start: req.body.start,
         end: req.body.end,
@@ -126,7 +155,13 @@ async function updateEducation(req, res) {
   try {
     const education = await JobSeekerEducationService.updateEducation(
       req.body.id,
-      req.body.data
+      {
+        institute: req.body.institute,
+        start: req.body.start,
+        end: req.body.end,
+        degree: req.body.degree,
+        description: req.body.description,
+      }
     );
     SuccessResponse.data = education;
     return res.status(StatusCodes.OK).json(SuccessResponse);
@@ -140,7 +175,8 @@ async function updateEducation(req, res) {
 async function addExperienceToJobSeeker(req, res) {
   try {
     const jobSeekerExperience =
-      await JobSeekerExperienceService.addExperienceToJobSeeker(req.user.id, {
+      await JobSeekerExperienceService.addExperienceToJobSeeker({
+        jobSeekerId: req.user.jobSeekerId,
         company: req.body.company,
         start: req.body.start,
         end: req.body.end,
@@ -202,7 +238,13 @@ async function updateExperience(req, res) {
   try {
     const experience = await JobSeekerExperienceService.updateExperience(
       req.body.id,
-      req.body.data
+      {
+        company: req.body.company,
+        start: req.body.start,
+        end: req.body.end,
+        role: req.body.role,
+        description: req.body.description,
+      }
     );
     SuccessResponse.data = experience;
     return res.status(StatusCodes.OK).json(SuccessResponse);
@@ -312,6 +354,7 @@ async function deleteVideo(req, res) {
 module.exports = {
   createJobSeeker,
   getJobSeekerProfileByUserId,
+  updateJobSeekerProfile,
   getAllJobSeekers,
   addEducationToJobSeeker,
   getEducationsByJobSeekerUserId,
