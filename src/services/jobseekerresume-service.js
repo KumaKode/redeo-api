@@ -57,6 +57,7 @@ async function getResumesByJobSeekerUserId(id) {
 
     return jobSeekerResumes;
   } catch (error) {
+    console.log(error);
     if (error instanceof AppError) throw error;
     throw new AppError(
       "Something went wrong",

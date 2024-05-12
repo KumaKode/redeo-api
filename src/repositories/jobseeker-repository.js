@@ -45,7 +45,6 @@ class JobSeekerRepository extends CrudRepository {
         {
           model: JobSeekerEducation,
           as: "education",
-          require: true,
           attributes: [
             "id",
             "jobSeekerId",
@@ -58,7 +57,6 @@ class JobSeekerRepository extends CrudRepository {
         },
         {
           model: JobSeekerExperience,
-          required: true,
           as: "experience",
           attributes: [
             "id",

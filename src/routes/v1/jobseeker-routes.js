@@ -38,7 +38,7 @@ router.post(
   JobSeekerController.addResumeToJobSeeker
 );
 
-router.post(
+router.get(
   "/resume",
   passport.checkAuth,
   JobSeekerController.getResumesByJobSeekerUserId

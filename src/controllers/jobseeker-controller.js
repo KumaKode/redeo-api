@@ -16,6 +16,7 @@ async function createJobSeeker(req, res) {
       userId: req.user.id,
       occupation: req.body.occupation,
       phone: req.body.phone,
+      address: req.body.address,
       gender: req.body.gender,
       dob: req.body.dob,
       age: moment().diff(req.body.dob, "years"),
@@ -39,7 +40,7 @@ async function getJobSeekerProfileByUserId(req, res) {
     const jobSeekerProfile = await JobSeekerService.getJobSeekerProfileByUserId(
       req.user.id
     );
-    SuccessResponse.data = jobSeekerProfile[0];
+    SuccessResponse.data = jobSeekerProfile;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.message = error.message;
