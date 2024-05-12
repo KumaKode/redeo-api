@@ -174,8 +174,7 @@ async function updateEducation(req, res) {
 async function addExperienceToJobSeeker(req, res) {
   try {
     const jobSeekerExperience =
-      await JobSeekerExperienceService.addExperienceToJobSeeker({
-        jobSeekerId: req.user.jobSeekerId,
+      await JobSeekerExperienceService.addExperienceToJobSeeker(req.user.id, {
         company: req.body.company,
         start: req.body.start,
         end: req.body.end,
