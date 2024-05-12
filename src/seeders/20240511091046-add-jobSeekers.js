@@ -19,6 +19,7 @@ module.exports = {
           userId: 1,
           occupation: "Backend Developer",
           phone: "+123456789",
+          address: "XYZ, PQR street, ABC city, 1234",
           description: `Meet Alex, a seasoned software engineer with over 4 years of hands-on experience and a fervent passion for backend development, data engineering, and cloud/DevOps. Alex's journey in the realm of coding began with a curiosity that quickly evolved into a profound understanding of the intricacies of software architecture and development.
           
           With a solid foundation in programming languages like Python, Java, and C++, Alex has honed their skills in crafting robust and efficient backend systems. Their code is not just functional but reflects a deep appreciation for clean, maintainable, and scalable solutions. Alex's commitment to quality is evident in the elegant structures and well-thought-out algorithms they employ in their work.
@@ -43,6 +44,7 @@ module.exports = {
           userId: 2,
           occupation: "Backend Developer",
           phone: "+123456789",
+          address: "XYZ, PQR street, ABC city, 1234",
           description: `Meet Sam, a dynamic full stack developer with a rich background in both frontend and backend technologies. With over 3 years of hands-on experience, Sam has demonstrated a deep passion for creating innovative and user-friendly web applications.
 
           On the frontend, Sam is proficient in HTML, CSS, and JavaScript, with expertise in popular frameworks such as React, Angular, and Vue.js. Their focus is not just on building visually appealing interfaces but also on ensuring a seamless user experience. Sam pays meticulous attention to detail, ensuring that every pixel and interaction is finely tuned to delight users.
@@ -69,6 +71,7 @@ module.exports = {
           userId: 3,
           occupation: "UI/UX Designer",
           phone: "+123456789",
+          address: "XYZ, PQR street, ABC city, 1234",
           description: `Meet Maya, a talented UI/UX designer with a passion for creating stunning and intuitive user experiences. With her keen eye for detail and creative flair, Maya has been shaping digital experiences that delight users for over 2 years.
 
           Maya's journey in design began with a love for art and technology, which she seamlessly merged into her career. Her designs are not just visually appealing but also highly functional, reflecting a deep understanding of user psychology and interaction principles.

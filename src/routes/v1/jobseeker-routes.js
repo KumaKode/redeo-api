@@ -80,8 +80,8 @@ router.post(
   JobSeekerController.addEducationToJobSeeker
 );
 
-router.post(
-  "/educations",
+router.get(
+  "/education",
   passport.checkAuth,
   JobSeekerController.getEducationsByJobSeekerUserId
 );
@@ -110,8 +110,8 @@ router.post(
   JobSeekerController.addExperienceToJobSeeker
 );
 
-router.post(
-  "/experiencess",
+router.get(
+  "/experience",
   passport.checkAuth,
   JobSeekerController.getExperiencesByJobSeekerUserId
 );
