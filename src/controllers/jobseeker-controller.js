@@ -40,7 +40,7 @@ async function getJobSeekerProfileByUserId(req, res) {
     const jobSeekerProfile = await JobSeekerService.getJobSeekerProfileByUserId(
       req.user.id
     );
-    SuccessResponse.data = jobSeekerProfile;
+    SuccessResponse.data = jobSeekerProfile[0];
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.message = error.message;
