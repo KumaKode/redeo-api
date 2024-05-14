@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       companyLogo: {
         type: DataTypes.STRING,
       },
-      companyBanner: {
+      phone: {
         type: DataTypes.STRING,
       },
       companyWebsite: {

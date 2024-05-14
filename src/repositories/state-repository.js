@@ -1,6 +1,5 @@
 const CrudRepository = require("./crud-repository");
 const { State } = require("../models");
-const AppError = require("../utils/errors/app-error");
 
 class StateRepository extends CrudRepository {
   constructor() {

@@ -1,72 +1,66 @@
 const { StatusCodes } = require("http-status-codes");
-const { CityRepository } = require("../repositories");
+const { SkillRepository } = require("../repositories");
 const AppError = require("../utils/errors/app-error");
 
-const cityRepository = new CityRepository();
-const StateService = require("./state-service");
+const skillRepository = new SkillRepository();
 
-async function createCity(data) {
+async function createSkill(data) {
   try {
-    const city = await cityRepository.create(data);
-    return city;
+    const skill = await skillRepository.create(data);
+    return skill;
   } catch (error) {
     throw new AppError(
-      "Cannot Create a new City Object!",
+      "Cannot Create a new Skill Object!",
       { explanation: error.message, query: error.sql || "" },
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 }
 
-async function getCities() {
+async function getSkillsByName(name) {
   try {
-    const cities = await cityRepository.findAll();
-    return cities;
+    const skills = await skillRepository.getSkillsByName(name);
+    return skills;
   } catch (error) {
     console.log(error);
     throw new AppError(
-      "Cannot fetch data of all the Cities",
+      "Cannot fetch data of all the skills",
       { explanation: error.message, query: error.sql || "" },
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 }
 
-async function getCitiesByCountryAndStateCode(stateId) {
+async function getSkill(id) {
   try {
-    const state = await StateService.getState(stateId);
+    const skill = await skillRepository.get(id);
 
-    if (!state) {
+    if (!skill) {
       throw new AppError(
-        "The requested state not found",
+        "The requested skill not found",
         { explanation: "" },
         StatusCodes.NOT_FOUND
       );
     }
 
-    const cities = await cityRepository.getCitiesByCountryAndStateCode({
-      countryCode: state.countryCode,
-      stateCode: state.stateCode,
-    });
-
-    return cities;
+    return skill;
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new AppError(
       "Something went wrong",
       { explanation: error.message, query: error.sql || "" },
-      StatusCodes.NOT_FOUND
+      StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 }
 
-async function destroyCity(id) {
+async function destroySkill(id) {
   try {
-    const response = await cityRepository.destroy(id);
+    const response = await skillRepository.destroy(id);
 
     if (!response) {
       throw new AppError(
-        "The requested city not found",
+        "The requested skill not found",
         { explanation: "" },
         StatusCodes.NOT_FOUND
       );
@@ -76,40 +70,39 @@ async function destroyCity(id) {
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new AppError(
-      "something went wrong",
+      "Something went wrong",
       { explanation: error.message, query: error.sql || "" },
-      StatusCodes.NOT_FOUND
+      StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 }
 
-async function updateCity(id, data) {
+async function updateSkill(id, data) {
   try {
-    const city = await cityRepository.update(id, data);
+    const skill = await skillRepository.update(id, data);
 
-    if (!city) {
+    if (!skill) {
       throw new AppError(
-        "The requested city not found",
+        "The requested skill not found",
         { explanation: "" },
         StatusCodes.NOT_FOUND
       );
     }
 
-    return city;
+    return skill;
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new AppError(
-      "something went wrong",
+      "Something went wrong",
       { explanation: error.message, query: error.sql || "" },
-      StatusCodes.NOT_FOUND
+      StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 }
 
 module.exports = {
-  createCity,
-  getCities,
-  getCitiesByCountryAndStateCode,
-  destroyCity,
-  updateCity,
+  getSkillsByName,
+  createSkill,
+  destroySkill,
+  updateSkill,
 };

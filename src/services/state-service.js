@@ -45,6 +45,7 @@ async function getState(id) {
 
     return state;
   } catch (error) {
+    if (error instanceof AppError) throw error;
     if ((error.StatusCode = StatusCodes.NOT_FOUND)) {
       throw new AppError("The requested state not found", error.StatusCode);
     }
@@ -76,9 +77,9 @@ async function getStatesByCountryId(id) {
     }
     return state;
   } catch (error) {
-    console.log(error);
+    if (error instanceof AppError) throw error;
     throw new AppError(
-      "The requested states not found",
+      "something went wrong",
       { explanation: error.message, query: error.sql || "" },
       StatusCodes.NOT_FOUND
     );
@@ -88,19 +89,22 @@ async function getStatesByCountryId(id) {
 async function destroyState(id) {
   try {
     const response = await stateRepository.destroy(id);
-    return response;
-  } catch (error) {
-    if ((error.StatusCode = StatusCodes.NOT_FOUND)) {
+
+    if (!response) {
       throw new AppError(
         "The requested state not found",
         { explanation: "" },
-        error.StatusCode
+        StatusCodes.NOT_FOUND
       );
     }
+
+    return response;
+  } catch (error) {
+    if (error instanceof AppError) throw error;
     throw new AppError(
-      "Something went wrong!",
+      "something went wrong",
       { explanation: error.message, query: error.sql || "" },
-      StatusCodes.INTERNAL_SERVER_ERROR
+      StatusCodes.NOT_FOUND
     );
   }
 }
@@ -108,11 +112,18 @@ async function destroyState(id) {
 async function updateState(id, data) {
   try {
     const state = await stateRepository.update(id, data);
+
+    if (!state) {
+      throw new AppError(
+        "The requested state not found",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
     return state;
   } catch (error) {
-    if ((error.StatusCode = StatusCodes.NOT_FOUND)) {
-      throw new AppError("The requested state not found", "", error.StatusCode);
-    }
+    if (error instanceof AppError) throw error;
     throw new AppError(
       "Something went wrong!",
       { explanation: error.message, query: error.sql || "" },

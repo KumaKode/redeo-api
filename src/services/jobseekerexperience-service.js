@@ -78,7 +78,7 @@ async function getExperienceByJobSeekerId(id) {
 
     if (!jobSeekerExperience) {
       throw new AppError(
-        "The requested education not found",
+        "The requested experience not found",
         { explanation: "" },
         StatusCodes.NOT_FOUND
       );
@@ -101,7 +101,7 @@ async function deleteExperience(id) {
 
     if (!experience) {
       throw new AppError(
-        "No experience found for the given job seeker Id",
+        "No experience found for the given Id",
         { explanation: "" },
         StatusCodes.CONFLICT
       );
@@ -109,7 +109,6 @@ async function deleteExperience(id) {
 
     return experience;
   } catch (error) {
-    console.log(error);
     if (error instanceof AppError) throw error;
     throw new AppError(
       "Something went wrong",
@@ -122,6 +121,15 @@ async function deleteExperience(id) {
 async function updateExperience(id, data) {
   try {
     const experience = await jobSeekerExperienceRepository.update(id, data);
+
+    if (!experience) {
+      throw new AppError(
+        "No experience found for the given Id",
+        { explanation: "" },
+        StatusCodes.CONFLICT
+      );
+    }
+
     return experience;
   } catch (error) {
     if (error instanceof AppError) throw error;

@@ -32,6 +32,29 @@ async function addResumeToJobSeeker(id, data) {
   }
 }
 
+async function getResume(id) {
+  try {
+    const jobSeekerResume = await jobSeekerResumeRepository.get(id);
+
+    if (!jobSeekerResume) {
+      throw new AppError(
+        "No resume found for the given Id",
+        { explanation: "" },
+        StatusCodes.CONFLICT
+      );
+    }
+
+    return jobSeekerResume;
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    throw new AppError(
+      "Something went wrong",
+      { explanation: error.message, sql: error.sql },
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 async function getResumesByJobSeekerUserId(id) {
   try {
     const jobSeeker = await JobSeekerService.getJobSeekerByUserId(id);
@@ -114,6 +137,7 @@ async function deleteResume(id) {
 
 module.exports = {
   addResumeToJobSeeker,
+  getResume,
   getResumesByJobSeekerUserId,
   deleteResume,
 };

@@ -1,12 +1,12 @@
 const { StatusCodes } = require("http-status-codes");
 const AppError = require("../utils/errors/app-error");
 
-const { JobSeekerRepository } = require("../repositories");
+const { EmployerRepository } = require("../repositories");
 
-const jobSeekerRepository = new JobSeekerRepository();
+const employerRepository = new EmployerRepository();
 const UserService = require("./user-service");
 
-async function createJobSeeker(data) {
+async function createEmployer(data) {
   try {
     const update = await UserService.updateUser(data.userId, {
       dob: data.dob,
@@ -14,8 +14,8 @@ async function createJobSeeker(data) {
       age: data.age,
     });
 
-    const jobSeeker = await jobSeekerRepository.create(data);
-    return [jobSeeker, update];
+    const employer = await employerRepository.create(data);
+    return [employer, update];
   } catch (error) {
     throw new AppError(
       "Something went wrong",
@@ -25,19 +25,19 @@ async function createJobSeeker(data) {
   }
 }
 
-async function getAllJobSeekers() {
+async function getAllEmployers() {
   try {
-    const jobSeekers = await jobSeekerRepository.findAll();
+    const employers = await employerRepository.findAll();
 
-    if (!jobSeekers) {
+    if (!employers) {
       throw new AppError(
-        "No Job Seekers found",
+        "No employers found",
         { explanation: "" },
         StatusCodes.CONFLICT
       );
     }
 
-    return jobSeekers;
+    return employers;
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new AppError(
@@ -48,7 +48,7 @@ async function getAllJobSeekers() {
   }
 }
 
-async function updateJobSeekerProfile(id, data) {
+async function updateEmployerProfile(id, data) {
   try {
     const update = await UserService.updateUser(data.userId, {
       dob: data.dob,
@@ -56,11 +56,11 @@ async function updateJobSeekerProfile(id, data) {
       age: data.age,
     });
 
-    const profile = await jobSeekerRepository.update(id, data);
+    const profile = await employerRepository.update(id, data);
 
     if (!profile) {
       throw new AppError(
-        "The requested job seeker profile not found",
+        "The requested employer profile not found",
         { explanation: "" },
         StatusCodes.NOT_FOUND
       );
@@ -77,19 +77,19 @@ async function updateJobSeekerProfile(id, data) {
   }
 }
 
-async function getJobSeekerProfileByUserId(id) {
+async function getEmployerProfileByUserId(id) {
   try {
-    const jobSeeker = await jobSeekerRepository.getJobSeekerProfileByUserId(id);
+    const employer = await employerRepository.getEmployerProfileByUserId(id);
 
-    if (!jobSeeker) {
+    if (!employer) {
       throw new AppError(
-        "No Job Seeker found for the given user Id",
+        "No employer found for the given user Id",
         { explanation: "" },
         StatusCodes.CONFLICT
       );
     }
 
-    return jobSeeker;
+    return employer;
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new AppError(
@@ -100,42 +100,19 @@ async function getJobSeekerProfileByUserId(id) {
   }
 }
 
-async function getJobSeekerByUserId(id) {
+async function getEmployerByUserId(id) {
   try {
-    const jobSeeker = await jobSeekerRepository.getJobSeekerByUserId(id);
+    const employer = await employerRepository.getEmployerByUserId(id);
 
-    if (!jobSeeker) {
+    if (!employer) {
       throw new AppError(
-        "No Job Seeker found for the given user Id",
+        "No employer found for the given user Id",
         { explanation: "" },
         StatusCodes.CONFLICT
       );
     }
 
-    return jobSeeker;
-  } catch (error) {
-    if (error instanceof AppError) throw error;
-    throw new AppError(
-      "Something went wrong",
-      { explanation: error.message, sql: error.sql },
-      StatusCodes.INTERNAL_SERVER_ERROR
-    );
-  }
-}
-
-async function getJobSeeker(id) {
-  try {
-    const jobSeeker = await jobSeekerRepository.get(id);
-
-    if (!jobSeeker) {
-      throw new AppError(
-        "No Job Seeker found for the given user Id",
-        { explanation: "" },
-        StatusCodes.CONFLICT
-      );
-    }
-
-    return jobSeeker;
+    return employer;
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new AppError(
@@ -147,10 +124,9 @@ async function getJobSeeker(id) {
 }
 
 module.exports = {
-  createJobSeeker,
-  getJobSeekerProfileByUserId,
-  updateJobSeekerProfile,
-  getAllJobSeekers,
-  getJobSeekerByUserId,
-  getJobSeeker,
+  createEmployer,
+  getEmployerProfileByUserId,
+  updateEmployerProfile,
+  getAllEmployers,
+  getEmployerByUserId,
 };

@@ -102,6 +102,21 @@ async function addTypeToUser(req, res) {
   }
 }
 
+async function addSkillToUser(req, res) {
+  try {
+    const user = await UserService.addSkillToUser(
+      req.user.id,
+      req.body.skillId
+    );
+    SuccessResponse.data = user;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = error.message;
+    ErrorResponse.error = error.explanation;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
 async function updateUser(req, res) {
   try {
     let user;
@@ -159,6 +174,7 @@ module.exports = {
   signup,
   signin,
   addTypeToUser,
+  addSkillToUser,
   updateUser,
   verifyEmail,
   resendOTP,

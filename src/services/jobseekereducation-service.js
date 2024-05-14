@@ -99,7 +99,7 @@ async function deleteEducation(id) {
 
     if (!education) {
       throw new AppError(
-        "No education found for the given job seeker Id",
+        "No education found for the given Id",
         { explanation: "" },
         StatusCodes.CONFLICT
       );
@@ -107,7 +107,6 @@ async function deleteEducation(id) {
 
     return education;
   } catch (error) {
-    console.log(error);
     if (error instanceof AppError) throw error;
     throw new AppError(
       "Something went wrong",
@@ -120,6 +119,15 @@ async function deleteEducation(id) {
 async function updateEducation(id, data) {
   try {
     const education = await jobSeekerEducationRepository.update(id, data);
+
+    if (!education) {
+      throw new AppError(
+        "No education found for the given Id",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
     return education;
   } catch (error) {
     if (error instanceof AppError) throw error;

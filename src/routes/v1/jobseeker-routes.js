@@ -50,7 +50,11 @@ router.get(
   JobSeekerController.getResumesByJobSeekerUserId
 );
 
-router.delete("/resume", passport.checkAuth, JobSeekerController.deleteResume);
+router.delete(
+  "/resume/:id",
+  passport.checkAuth,
+  JobSeekerController.deleteResume
+);
 
 router.post(
   "/video-upload",
@@ -78,7 +82,11 @@ router.post(
   JobSeekerController.getVideosByJobSeekerUserId
 );
 
-router.delete("/video", passport.checkAuth, JobSeekerController.deleteVideo);
+router.delete(
+  "/video/:id",
+  passport.checkAuth,
+  JobSeekerController.deleteVideo
+);
 
 router.post(
   "/education",
@@ -99,7 +107,7 @@ router.post(
 );
 
 router.delete(
-  "/education",
+  "/education/:id",
   passport.checkAuth,
   JobSeekerController.deleteEducation
 );
@@ -129,7 +137,7 @@ router.post(
 );
 
 router.delete(
-  "/experience",
+  "/experience/:id",
   passport.checkAuth,
   JobSeekerController.deleteExperience
 );

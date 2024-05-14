@@ -2,7 +2,11 @@ const { StatusCodes } = require("http-status-codes");
 const bcrypt = require("bcrypt");
 const { otpGen } = require("otp-gen-agent");
 
-const { UserRepository, TypeRepository } = require("../repositories");
+const {
+  UserRepository,
+  TypeRepository,
+  SkillRepository,
+} = require("../repositories");
 
 const AppError = require("../utils/errors/app-error");
 const { Auth } = require("../utils/common");
@@ -12,6 +16,7 @@ const { ServerConfig } = require("../config");
 
 const userRepository = new UserRepository();
 const typeRepository = new TypeRepository();
+const skillRepository = new SkillRepository();
 
 async function signup(data) {
   try {
@@ -105,6 +110,37 @@ async function addTypeToUser(id, userType) {
   }
 }
 
+async function addSkillToUser(userId, skillId) {
+  try {
+    const user = await userRepository.get(userId);
+    if (!user) {
+      throw new AppError(
+        "The requested user not found by the given id",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    const skill = await skillRepository.get(skillId);
+    if (!skill) {
+      throw new AppError(
+        "The requested skill not found by the given id",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    user.addType(skill);
+    return user;
+  } catch (error) {
+    throw new AppError(
+      "Something went wrong",
+      { explanation: error.message, query: error.sql || "" },
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 async function signin(data) {
   try {
     const user = await userRepository.getUserByEmail(data.email);
@@ -170,6 +206,15 @@ async function getUser(id) {
 async function updateUser(id, data) {
   try {
     const user = await userRepository.update(id, data);
+
+    if (!user) {
+      throw new AppError(
+        "The requested user not found",
+        { explanation: "" },
+        StatusCodes.NOT_FOUND
+      );
+    }
+
     return user;
   } catch (error) {
     if (error instanceof AppError) throw error;
@@ -369,6 +414,7 @@ module.exports = {
   // isAuthenticated,
   isAdmin,
   addTypeToUser,
+  addSkillToUser,
   isEmployer,
   isJobSeeker,
   verifyEmail,

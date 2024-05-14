@@ -27,7 +27,7 @@ module.exports = {
       companyLogo: {
         type: Sequelize.STRING,
       },
-      companyBanner: {
+      phone: {
         type: Sequelize.STRING,
       },
       companyWebsite: {

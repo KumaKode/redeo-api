@@ -1,5 +1,4 @@
 const CrudRepository = require("./crud-repository");
-const { Sequelize, where } = require("sequelize");
 const {
   User,
   JobSeeker,
@@ -17,7 +16,7 @@ class JobSeekerRepository extends CrudRepository {
   }
 
   async getJobSeekerProfileByUserId(id) {
-    const response = await this.model.findAll({
+    const response = await JobSeeker.findAll({
       where: {
         userId: id,
       },

@@ -139,7 +139,7 @@ async function getEducationByJobSeekerId(req, res) {
 async function deleteEducation(req, res) {
   try {
     const response = await JobSeekerEducationService.deleteEducation(
-      req.body.id
+      req.params.id
     );
     SuccessResponse.data = response;
     return res.status(StatusCodes.OK).json(SuccessResponse);
@@ -221,7 +221,7 @@ async function getExperienceByJobSeekerId(req, res) {
 async function deleteExperience(req, res) {
   try {
     const response = await JobSeekerExperienceService.deleteExperience(
-      req.body.id
+      req.params.id
     );
     SuccessResponse.data = response;
     return res.status(StatusCodes.OK).json(SuccessResponse);
@@ -286,7 +286,7 @@ async function getResumesByJobSeekerUserId(req, res) {
 
 async function deleteResume(req, res) {
   try {
-    const response = await JobSeekerResumeService.deleteResume(req.body.id);
+    const response = await JobSeekerResumeService.deleteResume(req.params.id);
     SuccessResponse.data = response;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
@@ -327,7 +327,7 @@ async function getVideosByJobSeekerUserId(req, res) {
 
 async function deleteVideo(req, res) {
   try {
-    const response = await VideoService.deleteResume(req.body.id);
+    const response = await VideoService.deleteResume(req.params.id);
     SuccessResponse.data = response;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {

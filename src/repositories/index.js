@@ -9,5 +9,8 @@ module.exports = {
   JobSeekerExperienceRepository: require("./jobseekerexperience-repository"),
   JobSeekerResumeRepository: require("./jobseekerresume-repository"),
   VideoRepository: require("./video-repository"),
+  SkillRepository: require("./skill-repository"),
+  EmployerRepository: require("./employer-repository"),
+  JobRepository: require("./job-repository"),
   OTPRepository: require("./otp-repository"),
 };

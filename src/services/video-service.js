@@ -33,6 +33,29 @@ async function addVideoToJobSeeker(id, data) {
   }
 }
 
+async function getVideo(id) {
+  try {
+    const jobSeekerVideo = await videoRepository.get(id);
+
+    if (!jobSeekerVideo) {
+      throw new AppError(
+        "No Video found for the given id",
+        { explanation: "" },
+        StatusCodes.CONFLICT
+      );
+    }
+
+    return jobSeekerVideo;
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    throw new AppError(
+      "Something went wrong",
+      { explanation: error.message, sql: error.sql },
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 async function getVideosByJobSeekerUserId(id) {
   try {
     const jobSeeker = await JobSeekerService.getJobSeekerByUserId(id);
@@ -116,6 +139,7 @@ async function deleteVideo(id) {
 
 module.exports = {
   addVideoToJobSeeker,
+  getVideo,
   getVideosByJobSeekerUserId,
   deleteVideo,
 };
