@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "employerId",
       });
 
+      this.hasMany(models.SocialLinks, {
+        foreignKey: "employerId",
+      });
+
       this.belongsTo(models.User, {
         foreignKey: "userId",
       });

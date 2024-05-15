@@ -2,29 +2,34 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("ApplyJobs", {
+    await queryInterface.createTable("SocialLinks", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      jobId: {
-        type: Sequelize.INTEGER,
-      },
       jobSeekerId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "JobSeekers",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
-      jobSeekerResumeId: {
+      employerId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "Employers",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
-      videoId: {
-        type: Sequelize.INTEGER,
+      platform: {
+        type: Sequelize.ENUM,
       },
-      status: {
-        type: Sequelize.ENUM("pending", "accepted", "rejected"),
-        defaultValue: "pending",
-        allowNull: false,
+      link: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -37,6 +42,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("ApplyJobs");
+    await queryInterface.dropTable("SocialLinks");
   },
 };

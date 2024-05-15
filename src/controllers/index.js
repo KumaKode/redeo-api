@@ -7,5 +7,6 @@ module.exports = {
   SkillController: require("./skill-controller"),
   JobSeekerController: require("./jobseeker-controller"),
   EmployerController: require("./employer-controller"),
+  SocialLinksController: require("./sociallinks-controller"),
   JobController: require("./job-controller"),
 };

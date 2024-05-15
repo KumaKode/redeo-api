@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class ApplyJob extends Model {
+  class SocialLinks extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,33 +9,39 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.JobSeeker, {
+        foreignKey: "jobSeekerId",
+        onDelete: "CASCADE",
+      });
+
+      this.belongsTo(models.Employer, {
+        foreignKey: "employerId",
+        onDelete: "CASCADE",
+      });
     }
   }
-  ApplyJob.init(
+  SocialLinks.init(
     {
-      jobId: {
-        type: DataTypes.INTEGER,
-      },
       jobSeekerId: {
         type: DataTypes.INTEGER,
       },
-      jobSeekerResumeId: {
+      employerId: {
         type: DataTypes.INTEGER,
       },
-      videoId: {
-        type: DataTypes.INTEGER,
+      platform: {
+        type: DataTypes.ENUM,
+        values: ["Facebook", "Twitter", "Instagram", "LinkedIn", "Github"],
+        allowNull: false,
       },
-      status: {
-        type: DataTypes.ENUM("pending", "accepted", "rejected"),
-        defaultValue: "pending",
+      link: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: "ApplyJob",
+      modelName: "SocialLinks",
     }
   );
-
-  return ApplyJob;
+  return SocialLinks;
 };

@@ -67,7 +67,7 @@ router.post(
         return res.status(error.statusCode).json(ErrorResponse);
       } else if (error) {
         ErrorResponse.message = error.message;
-        return res.status(error.statusCode).json(ErrorResponse);
+        return res.status(500).json(ErrorResponse);
       }
       // Everything went fine.
       next();

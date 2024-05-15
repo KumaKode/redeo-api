@@ -298,7 +298,7 @@ async function deleteResume(req, res) {
 
 async function addVideoToJobSeeker(req, res) {
   try {
-    const jobSeekerVideo = VideoService.addVideoToJobSeeker(req.user.id, {
+    const jobSeekerVideo = await VideoService.addVideoToJobSeeker(req.user.id, {
       name: req.file.filename,
       path: req.file.path,
     });

@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const AppError = require("../utils/errors/app-error");
 
 const { JobRepository } = require("../repositories");
+const { ApplyJob } = require("../models");
 
 const jobRepository = new JobRepository();
 const JobSeekerService = require("./jobseeker-service");
@@ -21,7 +22,7 @@ async function postJob(data) {
   }
 }
 
-async function applyJob(jobId, jobSeekerId, resumeId, videoId) {
+async function applyJob(jobId, jobSeekerId, jobSeekerResumeId, videoId) {
   try {
     const job = await jobRepository.get(jobId);
 
@@ -43,9 +44,11 @@ async function applyJob(jobId, jobSeekerId, resumeId, videoId) {
       );
     }
 
-    const resume = await jobSeekerResumeService.getResume(resumeId);
+    const jobSeekerResume = await jobSeekerResumeService.getResume(
+      jobSeekerResumeId
+    );
 
-    if (!resume) {
+    if (!jobSeekerResume) {
       throw new AppError(
         "No resume found for the given id",
         { explanation: "" },
@@ -57,17 +60,20 @@ async function applyJob(jobId, jobSeekerId, resumeId, videoId) {
 
     if (!video) {
       throw new AppError(
-        "No resume found for the given id",
+        "No video found for the given id",
         { explanation: "" },
         StatusCodes.NOT_FOUND
       );
     }
 
-    job.addJobSeeker(jobSeeker);
-    job.addResume(resume);
-    job.addVideo(video);
+    // ApplyJob.create({
+    //   jobId: job.id,
+    //   jobSeekerId: jobSeeker.id,
+    //   jobSeekerResumeId: jobSeekerResume.id,
+    //   videoId: video.id,
+    // });
 
-    return true;
+    return job;
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new AppError(

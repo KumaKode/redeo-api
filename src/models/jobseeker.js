@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 
       this.belongsToMany(models.Job, {
         through: "ApplyJob",
+        foreignKey: "jobSeekerId",
       });
 
       this.hasMany(models.JobSeekerEducation, {
@@ -37,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       this.hasMany(models.Video, {
+        foreignKey: "jobSeekerId",
+      });
+
+      this.hasMany(models.SocialLinks, {
         foreignKey: "jobSeekerId",
       });
 

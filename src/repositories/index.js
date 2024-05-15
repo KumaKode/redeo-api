@@ -10,6 +10,7 @@ module.exports = {
   JobSeekerResumeRepository: require("./jobseekerresume-repository"),
   VideoRepository: require("./video-repository"),
   SkillRepository: require("./skill-repository"),
+  SocialLinksRepository: require("./sociallinks-repository"),
   EmployerRepository: require("./employer-repository"),
   JobRepository: require("./job-repository"),
   OTPRepository: require("./otp-repository"),

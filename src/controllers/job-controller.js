@@ -30,7 +30,7 @@ async function applyJob(req, res) {
     const job = await JobService.applyJob(
       req.body.jobId,
       req.body.jobSeekerId,
-      req.body.resumeId,
+      req.body.jobSeekerResumeId,
       req.body.videoId
     );
     SuccessResponse.data = job;

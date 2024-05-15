@@ -11,14 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsToMany(models.JobSeeker, {
         through: "ApplyJob",
+        foreignKey: "jobId",
       });
 
       this.belongsToMany(models.JobSeekerResume, {
         through: "ApplyJob",
+        foreignKey: "jobId",
       });
 
       this.belongsToMany(models.Video, {
         through: "ApplyJob",
+        foreignKey: "jobId",
       });
 
       this.hasMany(models.Question, {
@@ -93,5 +96,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Job",
     }
   );
+
   return Job;
 };

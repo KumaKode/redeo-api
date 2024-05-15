@@ -10,6 +10,7 @@ module.exports = {
   VideoService: require("./video-service"),
   SkillService: require("./skill-service"),
   EmployerSerevice: require("./employer-service"),
+  SocialLinksService: require("./sociallinks-service"),
   JobService: require("./job-service"),
   OTPService: require("./otp-service"),
 };
