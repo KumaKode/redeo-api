@@ -7,7 +7,7 @@ const { SkillController } = require("../../controllers");
 
 router.post("/", passport.checkAuth, SkillController.createSkill);
 
-router.post("/getskill", passport.checkAuth, SkillController.getSkillsByName);
+router.post("/getskill", SkillController.getSkillsByName);
 
 router.delete("/", passport.checkAuth, SkillController.destroySkill);
 

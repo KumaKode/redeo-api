@@ -10,7 +10,7 @@ class SkillRepository extends CrudRepository {
   async getSkillsByName(name) {
     const response = await Skill.findAll({
       where: {
-        name: { [Op.like]: `%${name}%` },
+        name: { [Op.like]: `${name}%` },
       },
       limit: 10,
     });
