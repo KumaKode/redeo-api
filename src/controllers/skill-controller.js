@@ -18,7 +18,7 @@ async function createSkill(req, res) {
 
 async function getSkillsByName(req, res) {
   try {
-    const skills = await SkillService.getSkillsByName(req.body.name);
+    const skills = await SkillService.getSkillsByName(req.query.skill);
     SuccessResponse.data = skills;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
