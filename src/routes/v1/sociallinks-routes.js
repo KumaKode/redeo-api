@@ -5,10 +5,13 @@ const { SocialLinksController } = require("../../controllers");
 
 router.post("/", SocialLinksController.addSocialLinks);
 
-router.get("/", SocialLinksController.getAllSocialLinksByJobSeekerId);
+router.get(
+  "/jobseeker-links/:id",
+  SocialLinksController.getAllSocialLinksByJobSeekerId
+);
 
-router.post(
-  "/country-state",
+router.get(
+  "/employer-links/:id",
   SocialLinksController.getAllSocialLinksByEmployerId
 );
 

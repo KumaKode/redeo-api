@@ -22,7 +22,7 @@ async function addSocialLinks(req, res) {
 async function getAllSocialLinksByJobSeekerId(req, res) {
   try {
     const socialLinks = await SocialLinksService.getAllSocialLinksByJobSeekerId(
-      req.body.jobSeekerId
+      req.params.jobSeekerId
     );
     SuccessResponse.data = socialLinks;
     return res.status(StatusCodes.OK).json(SuccessResponse);
@@ -36,7 +36,7 @@ async function getAllSocialLinksByJobSeekerId(req, res) {
 async function getAllSocialLinksByEmployerId(req, res) {
   try {
     const socialLinks = await SocialLinksService.getAllSocialLinksByEmployerId(
-      req.body.employerId
+      req.params.employerId
     );
     SuccessResponse.data = socialLinks;
     return res.status(StatusCodes.OK).json(SuccessResponse);
