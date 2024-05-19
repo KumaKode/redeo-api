@@ -27,9 +27,12 @@ module.exports = {
       },
       platform: {
         type: Sequelize.ENUM,
+        values: ["Facebook", "Twitter", "Instagram", "LinkedIn", "Github"],
+        allowNull: false,
       },
       link: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
