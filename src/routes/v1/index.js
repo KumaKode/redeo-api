@@ -2,7 +2,6 @@ const express = require("express");
 require("../../utils/common/passport");
 
 const { InfoController } = require("../../controllers");
-const { UserMiddlewares } = require("../../middlewares");
 
 const countryRoutes = require("./country-routes");
 const cityRoutes = require("./city-routes");
@@ -16,7 +15,7 @@ const socialLinkRoutes = require("./sociallinks-routes");
 
 const router = express.Router();
 
-router.post("/info", UserMiddlewares.validateDOB, InfoController.info);
+router.post("/info", InfoController.info);
 router.use("/countries", countryRoutes);
 router.use("/states", stateRoutes);
 router.use("/cities", cityRoutes);

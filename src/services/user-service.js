@@ -100,6 +100,8 @@ async function addTypeToUser(id, userType) {
     }
 
     user.addType(type);
+
+    await user.update({ type: userType });
     return user;
   } catch (error) {
     throw new AppError(
@@ -309,11 +311,7 @@ async function isEmployer(id) {
         StatusCodes.NOT_FOUND
       );
     }
-
-    const admin = await isAdmin(id);
-    const emp = await user.hasRole(employer);
-
-    return [admin, emp];
+    return user.hasType(employer);
   } catch (error) {
     console.log(error);
     if (error instanceof AppError) throw error;
@@ -347,9 +345,7 @@ async function isJobSeeker(id) {
       );
     }
 
-    const response = await user.hasRole(jobSeeker);
-
-    return response;
+    return user.hasType(jobSeeker);
   } catch (error) {
     console.log(error);
     if (error instanceof AppError) throw error;

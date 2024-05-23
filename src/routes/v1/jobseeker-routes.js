@@ -100,11 +100,11 @@ router.get(
   JobSeekerController.getEducationsByJobSeekerUserId
 );
 
-router.post(
-  "/educationId",
-  passport.checkAuth,
-  JobSeekerController.getEducationByJobSeekerId
-);
+// router.post(
+//   "/educationId",
+//   passport.checkAuth,
+//   JobSeekerController.getEducationByJobSeekerId
+// );
 
 router.delete(
   "/education/:id",
@@ -113,7 +113,7 @@ router.delete(
 );
 
 router.patch(
-  "/education",
+  "/education/:id",
   passport.checkAuth,
   JobSeekerController.updateEducation
 );
@@ -130,11 +130,11 @@ router.get(
   JobSeekerController.getExperiencesByJobSeekerUserId
 );
 
-router.post(
-  "/experienceId",
-  passport.checkAuth,
-  JobSeekerController.getExperienceByJobSeekerId
-);
+// router.post(
+//   "/experienceId",
+//   passport.checkAuth,
+//   JobSeekerController.getExperienceByJobSeekerId
+// );
 
 router.delete(
   "/experience/:id",
@@ -143,7 +143,7 @@ router.delete(
 );
 
 router.patch(
-  "/experience",
+  "/experience/:id",
   passport.checkAuth,
   JobSeekerController.updateExperience
 );

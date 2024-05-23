@@ -14,7 +14,7 @@ router.get(
 );
 
 router.patch(
-  "/profile",
+  "/profile/:id",
   passport.checkAuth,
   EmployerController.updateEmployerProfile
 );

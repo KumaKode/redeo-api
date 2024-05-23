@@ -69,6 +69,11 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "Local",
         allowNull: false,
       },
+      type: {
+        type: DataTypes.ENUM({
+          values: ["jobSeeker", "employer"],
+        }),
+      },
       profilePicture: {
         type: DataTypes.STRING,
       },

@@ -153,7 +153,7 @@ async function deleteEducation(req, res) {
 async function updateEducation(req, res) {
   try {
     const education = await JobSeekerEducationService.updateEducation(
-      req.body.id,
+      req.params.id,
       {
         institute: req.body.institute,
         start: req.body.start,
@@ -235,7 +235,7 @@ async function deleteExperience(req, res) {
 async function updateExperience(req, res) {
   try {
     const experience = await JobSeekerExperienceService.updateExperience(
-      req.body.id,
+      req.params.id,
       {
         company: req.body.company,
         start: req.body.start,

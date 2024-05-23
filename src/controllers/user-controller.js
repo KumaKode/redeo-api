@@ -125,7 +125,15 @@ async function updateUser(req, res) {
         profilePicture: req.file.path,
       });
     } else {
-      user = await UserService.updateUser(req.body.id, req.body.data);
+      user = await UserService.updateUser(req.user.id, {
+        fullName: req.body.fullName,
+        dob: req.body.dob,
+        age: req.body.age,
+        emailVerified: req.body.emailVerified,
+        gender: req.body.gender,
+        socialLogin: req.body.socialLogin,
+        type: req.body.type,
+      });
     }
     SuccessResponse.data = user;
     return res.status(StatusCodes.OK).json(SuccessResponse);

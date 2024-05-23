@@ -46,6 +46,10 @@ module.exports = {
         defaultValue: "Local",
         allowNull: false,
       },
+      type: {
+        type: Sequelize.ENUM,
+        values: ["jobSeeker", "employer"],
+      },
       profilePicture: {
         type: Sequelize.STRING,
       },
